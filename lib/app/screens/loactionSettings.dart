@@ -42,9 +42,16 @@ class _LocationSettingsState extends State<LocationSettings> {
     }
   }
 
-  Future<void> fetchPrayersTime(String city) async {
+  Future<void> fetchPrayersTime() async {
+    if (selectedCity == null ||
+        selectedCity!.isEmpty ||
+        selectedCountry == null ||
+        selectedCountry!.isEmpty) {
+      showError('Please select both a city and a country.');
+      return; // Exit the function early
+    }
     var url =
-        'https://api.aladhan.com/v1/timingsByCity?city=$city&country=$selectedCountry';
+        'https://api.aladhan.com/v1/timingsByCity?city=$selectedCity&country=$selectedCountry';
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -81,49 +88,69 @@ class _LocationSettingsState extends State<LocationSettings> {
       ),
       body: countries.isEmpty
           ? Center(child: const CircularProgressIndicator())
-          : Column(children: [
-              DropdownButton(
-                isExpanded: true,
-                value: selectedCountry,
-                hint: const Text('আপনার দেশ'),
-                items: countries
-                    .map((country) {
-                      return DropdownMenuItem(
-                        value: country['country'], // Use a unique identifier
-                        child: Text(country['country']),
-                      );
-                    })
-                    .toSet()
-                    .toList(), // Convert to Set to avoid duplicates
-                onChanged: (value) {
-                  if (value != null && value is String) {
-                    // Ensure value is a String
-                    setState(() {
-                      selectedCountry = value;
-                      selectedCities = List<String>.from(countries
-                          .firstWhere((c) => c['country'] == value)['cities']);
-                    });
-                  }
-                },
-              ),
-              DropdownButton(
-                isExpanded: true,
-                value: selectedCity,
-                hint: const Text('আপনার জেলা'),
-                items: selectedCities?.map((city) {
-                  return DropdownMenuItem(
-                    value: city,
-                    child: Text(city),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  fetchPrayersTime(value!);
-                  setState(() {
-                    selectedCity = value;
-                  });
-                },
-              ),
-            ]),
+          : Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(children: [
+                Expanded(
+                  child: Column(children: [
+                    DropdownButton(
+                      isExpanded: true,
+                      value: selectedCountry,
+                      hint: const Text('আপনার দেশ'),
+                      items: countries
+                          .map((country) {
+                            return DropdownMenuItem(
+                              value:
+                                  country['country'], // Use a unique identifier
+                              child: Text(country['country']),
+                            );
+                          })
+                          .toSet()
+                          .toList(), // Convert to Set to avoid duplicates
+                      onChanged: (value) {
+                        if (value != null && value is String) {
+                          // Ensure value is a String
+                          setState(() {
+                            selectedCountry = value;
+                            selectedCities = List<String>.from(
+                                countries.firstWhere(
+                                    (c) => c['country'] == value)['cities']);
+                          });
+                        }
+                      },
+                    ),
+                    DropdownButton(
+                      isExpanded: true,
+                      value: selectedCity,
+                      hint: const Text('আপনার জেলা'),
+                      items: selectedCities?.map((city) {
+                        return DropdownMenuItem(
+                          value: city,
+                          child: Text(city),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedCity = value;
+                        });
+                      },
+                    ),
+                  ]),
+                ),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: ElevatedButton(
+                    onPressed: fetchPrayersTime,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue, // Background color
+                      foregroundColor: Colors.white, // Text color
+                    ),
+                    child: Text('Save'),
+                  ),
+                )
+              ]),
+          ),
     );
   }
 }
