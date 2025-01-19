@@ -8,7 +8,7 @@ class BottomNavigation extends StatelessWidget {
     return BottomNavigationBar(items: [
       BottomNavigationBarItem(
         icon: Icon(Icons.home),
-        label: 'Home',
+        label: 'হোম',
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.search),
