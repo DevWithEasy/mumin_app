@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MuminScreen extends StatelessWidget {
-  const MuminScreen({super.key});
+class IslamScreen extends StatelessWidget {
+  const IslamScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Container(),
-      ),
+      body: Center(),
     );
   }
 }

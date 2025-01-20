@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mumin/app/screens/mumin.dart';
+import 'package:mumin/app/screens/main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void navigateToNextScreen() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const MuminScreen()),
+      MaterialPageRoute(builder: (context) => const MainScreen()),
     );
   }
 

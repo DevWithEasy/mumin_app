@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatelessWidget {
-  const BottomNavigation({super.key});
+  final int currentIndex;
+  final Function(int) onTap;
 
+  BottomNavigation({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
+
+  final natigationItems = [
+    {'icon': Icons.home, 'title': 'হোম'},
+    {'icon': Icons.calendar_month, 'title': 'ক্যালেন্ডার'},
+    {'icon': Icons.person, 'title': 'মুমিন'},
+    {'icon': Icons.follow_the_signs, 'title': 'ইসলাম'},
+    {'icon': Icons.menu,'title': 'মেন্যু'},
+  ];
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      items: [
-      BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        label: 'হোম',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.calendar_month),
-        label: 'ক্যালেন্ডার',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.person),
-        label: 'মুমিন',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.follow_the_signs),
-        label: 'ইসলাম',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.menu),
-        label: 'মেন্যু',
-      ),
-    ]);
+        type: BottomNavigationBarType.fixed,
+        currentIndex: currentIndex,
+        onTap: onTap,
+        items: natigationItems.map((item) {
+          return BottomNavigationBarItem(
+            icon: Icon(item['icon'] as IconData),
+            label: item['title'] as String,
+          );
+        }).toList());
   }
 }
