@@ -46,7 +46,7 @@ class SunTime extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Icon(Icons.sunny, color: Colors.white),
-                SizedBox(width: 10),
+                SizedBox(width: 15),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

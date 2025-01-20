@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mumin/app/components/bottom_navigation_widget.dart';
 import 'package:mumin/app/components/mumin/home_appbar_widget.dart';
 import 'package:mumin/app/components/mumin/prayer_time_widget.dart';
+import 'package:mumin/app/components/mumin/resticted_prayer_time_widget.dart';
+import 'package:mumin/app/components/mumin/sahari_ifter_time_widget.dart';
 import 'package:mumin/app/components/mumin/suntime_widget.dart';
 
 class MuminScreen extends StatefulWidget {
@@ -17,7 +19,10 @@ class _MuminScreenState extends State<MuminScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('মুমিন', style: TextStyle(fontSize: 18)),
+        title: Text(
+          'মুমিন', 
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
+        ),
         elevation: 0.1,
         backgroundColor: Colors.white,
         shadowColor: Colors.blueGrey,
@@ -30,7 +35,11 @@ class _MuminScreenState extends State<MuminScreen> {
           children: const [
             SunTime(),
             SizedBox(height: 12),
-            PrayerTime()
+            PrayerTime(),
+            SizedBox(height: 12),
+            RestictedPrayerTime(),
+            SizedBox(height: 12),
+            SahariIfterTime()
           ],
         ),
       ),

@@ -3,14 +3,20 @@ import 'dart:math';
 import 'package:intl/intl.dart';
 
 class CountdownTimer extends StatefulWidget {
-  final String startTime; // Start time in HH:mm format
-  final String endTime;   // End time in HH:mm format
+  final String startTime;
+  final String endTime;
+  final double height;
+  final double width;
+  final double fontSize; 
 
   const CountdownTimer({
-    Key? key,
+    super.key,
     required this.startTime,
     required this.endTime,
-  }) : super(key: key);
+    required this.height,
+    required this.width,
+    required this.fontSize,
+  });
 
   @override
   _CountdownTimerState createState() => _CountdownTimerState();
@@ -63,13 +69,13 @@ class _CountdownTimerState extends State<CountdownTimer>
     final seconds = remainingTime.inSeconds % 60;
 
     return SizedBox(
-      width: 100, // Compact widget size
-      height: 100,
+      width: widget.width, // Compact widget size
+      height: widget.height,
       child: Stack(
         alignment: Alignment.center,
         children: [
           CustomPaint(
-            size: Size(90, 90), // Adjust circle size
+            size: Size(widget.width-10, widget.height-10), // Adjust circle size
             painter: CountdownPainter(
               animation: _controller,
               strokeWidth: 5,
@@ -79,7 +85,7 @@ class _CountdownTimerState extends State<CountdownTimer>
           ),
           Text(
             '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}',
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: widget.fontSize, fontWeight: FontWeight.bold),
           ),
         ],
       ),
@@ -136,7 +142,6 @@ class CountdownPainter extends CustomPainter {
     return true;
   }
 }
-
 
 // import 'package:flutter/material.dart';
 // import 'dart:math';

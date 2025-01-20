@@ -21,7 +21,13 @@ class PrayerTime extends StatelessWidget {
               children: [
                 Text('এশার নামযের',style: TextStyle(fontWeight: FontWeight.bold)),
                 Text('ওয়াক্ত শেষ হতে বাকি',style: TextStyle(color: Colors.grey)),
-                CountdownTimer(startTime: '07:00',endTime: '08:10')
+                CountdownTimer(
+                  startTime: '07:00',
+                  endTime: '07:01',
+                  height: 100,
+                  width : 100,
+                  fontSize: 14,
+                )
               ],
             )
           ),
