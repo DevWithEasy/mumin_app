@@ -3,7 +3,7 @@ import 'package:mumin/app/components/bottom_navigation_widget.dart';
 import 'package:mumin/app/components/mumin/home_appbar_widget.dart';
 import 'package:mumin/app/screens/calender.dart';
 import 'package:mumin/app/screens/home.dart';
-import 'package:mumin/app/screens/islam.dart';
+import 'package:mumin/app/screens/store.dart';
 import 'package:mumin/app/screens/menu.dart';
 import 'package:mumin/app/screens/mumin.dart';
 
@@ -21,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(),
     CalenderScreen(),
     MuminScreen(),
-    IslamScreen(),
+    StoreScreen(),
     MenuScreen(),
   ];
 
@@ -40,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
           'মুমিন', 
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
         ),
-        elevation: 0.1,
+        elevation: 0.4,
         backgroundColor: Colors.white,
         shadowColor: Colors.blueGrey,
         actions: [HomeAppBarActions()],

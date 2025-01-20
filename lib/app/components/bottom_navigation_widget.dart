@@ -14,7 +14,7 @@ class BottomNavigation extends StatelessWidget {
     {'icon': Icons.home, 'title': 'হোম'},
     {'icon': Icons.calendar_month, 'title': 'ক্যালেন্ডার'},
     {'icon': Icons.person, 'title': 'মুমিন'},
-    {'icon': Icons.follow_the_signs, 'title': 'ইসলাম'},
+    {'icon': Icons.store, 'title': 'স্টোর'},
     {'icon': Icons.menu,'title': 'মেন্যু'},
   ];
   @override
