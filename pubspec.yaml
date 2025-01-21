@@ -38,6 +38,8 @@ dependencies:
   google_fonts: ^6.2.1
   shared_preferences: ^2.3.5
   intl: ^0.20.1
+  flutter_html: ^3.0.0-beta.2
+  wakelock_plus: ^1.2.10
 
 dev_dependencies:
   flutter_test:
@@ -70,11 +72,13 @@ flutter:
     - assets/images/mumin/hadis.png
     - assets/images/mumin/kalima.png
     - assets/images/mumin/quran.png
-    - assets/images/mumin/ramadan.png 
-    - assets/images/mumin/salah.png           
+    - assets/images/mumin/ramadan.png
+    - assets/images/mumin/salah.png
     - assets/images/mumin/tasbih.png
     - assets/images/mumin/zakat.png
     - assets/images/salah/sujud.png
+    - assets/data/asmaul_husna.json
+    - assets/data/kalimas.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

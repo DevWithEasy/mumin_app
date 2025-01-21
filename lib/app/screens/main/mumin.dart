@@ -40,13 +40,13 @@ class MuminScreen extends StatelessWidget {
               SizedBox(height: 12),
               GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, // Number of items per row
+                  crossAxisCount: 3,
                   crossAxisSpacing: 8.0,
                   mainAxisSpacing: 8.0,
                 ),
                 itemCount: items.length,
-                shrinkWrap: true, // Shrinks the GridView to fit its content
-                physics: const NeverScrollableScrollPhysics(), // Disable GridView's scrolling
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
@@ -63,6 +63,7 @@ class MuminScreen extends StatelessWidget {
                         border : Border.all(color : Colors.green, width: 0.5) // Example background color
                       ),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Image.asset(
                             items[index]['image'],
@@ -74,6 +75,7 @@ class MuminScreen extends StatelessWidget {
                             items[index]['title'],
                             textAlign: TextAlign.center,
                           ),
+                          const SizedBox(height: 8),
                         ],
                       ),
                     ),
