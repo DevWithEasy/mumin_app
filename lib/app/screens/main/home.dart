@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mumin/app/components/mumin/prayer_time_widget.dart';
-import 'package:mumin/app/components/mumin/resticted_prayer_time_widget.dart';
-import 'package:mumin/app/components/mumin/sahari_ifter_time_widget.dart';
-import 'package:mumin/app/components/mumin/suntime_widget.dart';
+import 'package:mumin/app/components/mainpage/prayer_time_widget.dart';
+import 'package:mumin/app/components/mainpage/resticted_prayer_time_widget.dart';
+import 'package:mumin/app/components/mainpage/sahari_ifter_time_widget.dart';
+import 'package:mumin/app/components/mainpage/suntime_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -12,7 +12,7 @@ class ResticedPrayerBottomsheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Bottom Sheet Title',
+            'সালাতের নিষিদ্ধ সময়',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 10),
@@ -21,12 +21,6 @@ class ResticedPrayerBottomsheet extends StatelessWidget {
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context); // Close the bottom sheet
-            },
-            child: Text('Close'),
-          ),
         ],
       ),
     );

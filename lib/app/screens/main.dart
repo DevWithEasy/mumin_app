@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mumin/app/components/bottom_navigation_widget.dart';
-import 'package:mumin/app/components/mumin/home_appbar_widget.dart';
-import 'package:mumin/app/screens/calender.dart';
-import 'package:mumin/app/screens/home.dart';
-import 'package:mumin/app/screens/store.dart';
-import 'package:mumin/app/screens/menu.dart';
-import 'package:mumin/app/screens/mumin.dart';
+import 'package:mumin/app/components/mainpage/home_appbar_widget.dart';
+import 'package:mumin/app/screens/main/calender.dart';
+import 'package:mumin/app/screens/main/home.dart';
+import 'package:mumin/app/screens/main/store.dart';
+import 'package:mumin/app/screens/main/menu.dart';
+import 'package:mumin/app/screens/main/mumin.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -26,7 +26,6 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   void _onItemTapped(int index) {
-    print(index);
     setState(() {
       _currentIndex = index;
     });
@@ -40,9 +39,9 @@ class _MainScreenState extends State<MainScreen> {
           'মুমিন', 
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
         ),
-        elevation: 0.4,
+        elevation: 0.1,
         backgroundColor: Colors.white,
-        shadowColor: Colors.blueGrey,
+        shadowColor: Colors.grey,
         actions: [HomeAppBarActions()],
       ),
       body: _screens[_currentIndex],

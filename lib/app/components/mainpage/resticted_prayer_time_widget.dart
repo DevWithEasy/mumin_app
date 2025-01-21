@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mumin/app/components/mumin/resticed_prayer_bottomsheet.dart';
+import 'package:mumin/app/components/mainpage/nafl_prayer_bottomsheet.dart';
+import 'package:mumin/app/components/mainpage/resticed_prayer_bottomsheet.dart';
 import 'package:mumin/app/screens/faq.dart';
 
 class RestictedPrayerTime extends StatelessWidget {
@@ -31,11 +32,33 @@ class RestictedPrayerTime extends StatelessWidget {
                       Text(
                         'সালাতের নিষিদ্ধ সময়',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Icon(Icons.info),
+                      InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled:true, // Enables fullscreen behavior
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(16)),
+                              ),
+                              builder: (context) => DraggableScrollableSheet(
+                                initialChildSize:0.5,
+                                minChildSize:0.25, 
+                                maxChildSize: 1,
+                                expand: false,
+                                builder: (context, scrollController) =>
+                                    SingleChildScrollView(
+                                  controller: scrollController,
+                                  child: ResticedPrayerBottomsheet(),
+                                ),
+                              ),
+                            );
+                          },
+                          child: Icon(Icons.info, size: 25)),
                     ],
                   ),
                   SizedBox(height: 12),
@@ -94,10 +117,24 @@ class RestictedPrayerTime extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     showModalBottomSheet(
-                        context: context,
-                        builder: ((context) {
-                          return ResticedPrayerBottomsheet();
-                        }));
+                              context: context,
+                              isScrollControlled:true,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(16)),
+                              ),
+                              builder: (context) => DraggableScrollableSheet(
+                                initialChildSize:0.5,
+                                minChildSize:0.25, 
+                                maxChildSize: 1,
+                                expand: false,
+                                builder: (context, scrollController) =>
+                                    SingleChildScrollView(
+                                  controller: scrollController,
+                                  child: NaflPrayerBottomsheet(),
+                                ),
+                              ),
+                            );
                   },
                   child: Align(
                     alignment: Alignment.topCenter,

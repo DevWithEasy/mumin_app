@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mumin/app/components/mumin/time_countdown_widget.dart';
+import 'package:mumin/app/components/mainpage/time_countdown_widget.dart';
 
 class SahriifterScreen extends StatelessWidget {
   const SahriifterScreen({super.key});
