@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mumin/app/components/hadith/hadith_menu_bottomsheet_widget.dart';
 import 'package:mumin/app/components/hadith/hadith_name_code_widget.dart';
 import 'package:mumin/app/components/hadith/loading_hadith_widget.dart';
 import 'package:mumin/app/models/Hadith.dart';
@@ -199,20 +200,27 @@ class _HadithsScreenState extends State<HadithsScreen> {
                                                 height: 35,
                                                 child: ElevatedButton(
                                                     onPressed: () {
-                                                      final Validity validity = _validities.singleWhere((item)=>item.title == hadithItem.grade);
+                                                      final Validity validity =
+                                                          _validities.singleWhere(
+                                                              (item) =>
+                                                                  item.title ==
+                                                                  hadithItem
+                                                                      .grade);
                                                       showDialog(
                                                           context: context,
-                                                          builder:
-                                                              (context) =>
-                                                                  AlertDialog(
-                                                                    title: Text(validity.title?? ""),
-                                                                    content: Text(
-                                                                        validity.description ??''
-                                                                    ),
-                                                                  ));
+                                                          builder: (context) =>
+                                                              AlertDialog(
+                                                                title: Text(
+                                                                    validity.title ??
+                                                                        ""),
+                                                                content: Text(
+                                                                    validity.description ??
+                                                                        ''),
+                                                              ));
                                                     },
                                                     style: ElevatedButton
                                                         .styleFrom(
+                                                      elevation: 0,
                                                       backgroundColor:
                                                           (colorFromHex(hadithItem
                                                                   .gradeColor ??
@@ -231,7 +239,23 @@ class _HadithsScreenState extends State<HadithsScreen> {
                                                             '')),
                                               ),
                                               SizedBox(width: 8),
-                                              Icon(Icons.more_vert)
+                                              InkWell(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                        context: context,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.vertical(
+                                                                  top: Radius
+                                                                      .circular(
+                                                                          16)),
+                                                        ),
+                                                        builder: (context) {
+                                                          return HadithMenuBottomsheet();
+                                                        });
+                                                  },
+                                                  child: Icon(Icons.more_vert))
                                             ])
                                           ]),
                                       SizedBox(height: 8),

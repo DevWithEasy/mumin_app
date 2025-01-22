@@ -58,7 +58,7 @@ class RestictedPrayerTime extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Icon(Icons.info, size: 25)),
+                          child: Icon(Icons.info, size: 18)),
                     ],
                   ),
                   SizedBox(height: 12),
