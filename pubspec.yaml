@@ -70,6 +70,7 @@ flutter:
     - assets/images/mumin/allah.png
     - assets/images/mumin/dua.png
     - assets/images/mumin/hadis.png
+    - assets/images/mumin/halal.png
     - assets/images/mumin/kalima.png
     - assets/images/mumin/quran.png
     - assets/images/mumin/ramadan.png
@@ -79,6 +80,8 @@ flutter:
     - assets/images/salah/sujud.png
     - assets/data/asmaul_husna.json
     - assets/data/kalimas.json
+    - assets/data/hadith.json
+    - assets/data/validities.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

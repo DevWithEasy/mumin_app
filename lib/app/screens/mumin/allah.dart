@@ -93,9 +93,15 @@ class _AllahScreenState extends State<AllahScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text('আরবি:  ${item['arbi'] ?? ''}'),
+                                        Text(
+                                          'আরবি:  ${item['arbi'] ?? ''}',
+                                          style: const TextStyle(fontSize: 16)
+                                        ),
                                         SizedBox(height: 5),
-                                        Text('অর্থ:  ${item['meaning'] ?? ''}'),
+                                        Text(
+                                          'অর্থ:  ${item['meaning'] ?? ''}',
+                                          style: const TextStyle(fontSize: 16)
+                                        ),
                                         SizedBox(height: 8),
                                         KalimaText(
                                           title: 'ফযীলতঃ',

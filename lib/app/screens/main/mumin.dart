@@ -4,6 +4,7 @@ import 'package:mumin/app/screens/mumin/Dua.dart';
 import 'package:mumin/app/screens/mumin/Hadith.dart';
 import 'package:mumin/app/screens/mumin/Kalima.dart';
 import 'package:mumin/app/screens/mumin/Quran.dart';
+import 'package:mumin/app/screens/mumin/halal_haram.dart';
 import 'package:mumin/app/screens/mumin/ramadan.dart';
 import 'package:mumin/app/screens/mumin/salah.dart';
 import 'package:mumin/app/screens/mumin/tasbih.dart';
@@ -15,6 +16,7 @@ class MuminScreen extends StatelessWidget {
     {'title': 'আল্লাহ', 'image': 'assets/images/mumin/allah.png', 'screen': AllahScreen()},
     {'title': 'দোয়া', 'image': 'assets/images/mumin/dua.png', 'screen': DuaScreen()},
     {'title': 'হাদিস', 'image': 'assets/images/mumin/hadis.png', 'screen': HadithScreen()},
+    {'title': 'হালাল হারাম', 'image': 'assets/images/mumin/halal.png', 'screen': HalamHaramScreen()},
     {'title': 'কালিমা', 'image': 'assets/images/mumin/kalima.png', 'screen': KalimaScreen()},
     {'title': 'কুরআন', 'image': 'assets/images/mumin/quran.png', 'screen': QuranScreen()},
     {'title': 'রোজা', 'image': 'assets/images/mumin/ramadan.png', 'screen': RamadanScreen()},
