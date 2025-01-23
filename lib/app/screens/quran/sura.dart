@@ -2,15 +2,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mumin/app/components/hadith/loading_hadith_widget.dart';
+import 'package:mumin/app/components/quran/quran_setting_bottomsheet_widget.dart';
 import 'package:mumin/app/models/SuraDetails.dart';
+import 'package:mumin/app/providers/ReadProvider.dart';
 import 'package:mumin/app/utils/convert_to_bangla_number.dart';
+import 'package:provider/provider.dart';
 
 class SuraScreen extends StatefulWidget {
   final String id;
   final String name;
   final String bnName;
 
-  const SuraScreen({super.key, required this.id, required this.name, required this.bnName});
+  const SuraScreen(
+      {super.key, required this.id, required this.name, required this.bnName});
 
   @override
   State<SuraScreen> createState() => _SuraScreenState();
@@ -19,7 +23,6 @@ class SuraScreen extends StatefulWidget {
 class _SuraScreenState extends State<SuraScreen> {
   List<SuraDeatils> _quran = [];
   SuraDeatils? selectedSura;
-  String bnTranlator = 'jahirul_bn';
 
   Future<void> _loadData() async {
     try {
@@ -50,16 +53,28 @@ class _SuraScreenState extends State<SuraScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final readProvider = Provider.of<Readprovider>(context);
     return Scaffold(
         backgroundColor: _quran.isEmpty ? Colors.white : Colors.grey.shade100,
         appBar: AppBar(
           title: Text(widget.name),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => QuranSettingBottomsheet(),
+                );
+              },
+            )
+          ],
         ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: selectedSura == null
-                ? LoadingHadithWidget(text: 'সুরা খোঁজা হচ্ছে')// Loading state
+                ? LoadingHadithWidget(text: 'সুরা খোঁজা হচ্ছে') // Loading state
                 : Column(
                     children: [
                       Container(
@@ -75,8 +90,9 @@ class _SuraScreenState extends State<SuraScreen> {
                                 Expanded(
                                   flex: 2,
                                   child: Image.asset(
-                                    selectedSura?.revelationType == 'Meccan' ? 
-                                    'assets/images/makka.png' : 'assets/images/madina.png',
+                                    selectedSura?.revelationType == 'Meccan'
+                                        ? 'assets/images/makka.png'
+                                        : 'assets/images/madina.png',
                                     height: 50,
                                     width: 50,
                                   ),
@@ -85,7 +101,8 @@ class _SuraScreenState extends State<SuraScreen> {
                                 Expanded(
                                   flex: 4,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         widget.name,
@@ -120,10 +137,11 @@ class _SuraScreenState extends State<SuraScreen> {
                             ),
                             SizedBox(height: 16),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 40),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 40),
                               child: Image.asset(
                                 'assets/images/bismillah.png',
-                                  ),
+                              ),
                             )
                           ],
                         ),
@@ -157,7 +175,34 @@ class _SuraScreenState extends State<SuraScreen> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    Icon(Icons.more_vert)
+                                    InkWell(
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                backgroundColor: Colors.white,
+                                                    content: Container(
+                                                      width: MediaQuery.of(context).size.width *0.8,
+                                                      height: MediaQuery.of(context).size.height *0.3,
+                                                      padding: EdgeInsets.all(8),
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                      '${selectedSura?.englishName} ${convertToBanglaNumbers(selectedSura!.number.toString())}:${convertToBanglaNumbers((index + 1).toString())}',
+                                                      style: TextStyle(
+                                                        fontSize: 16
+                                                      ),
+                                                    ),
+                                                          Row(
+                                                            children: [],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ));
+                                        },
+                                        child: Icon(Icons.more_horiz))
                                   ],
                                 ),
                                 SizedBox(height: 8),
@@ -168,7 +213,7 @@ class _SuraScreenState extends State<SuraScreen> {
                                     child: Text(
                                       ayah.arabic,
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: readProvider.arabicFont,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -178,12 +223,20 @@ class _SuraScreenState extends State<SuraScreen> {
                                 SizedBox(height: 10),
                                 Text(
                                   ayah.english,
+                                  style: TextStyle(
+                                        fontSize: readProvider.englishFont,
+                                        color: Colors.black,
+                                      ),
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  bnTranlator == 'jahirul_bn'
+                                  readProvider.bnTranlator == 'jahirul_bn'
                                       ? ayah.jahirul_bn
                                       : ayah.muhiuddin_bn,
+                                      style: TextStyle(
+                                        fontSize: readProvider.banglaFont,
+                                        color: Colors.black,
+                                      ),
                                 )
                               ],
                             ),
