@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mumin/app/components/hadith/loading_hadith_widget.dart';
 import 'package:mumin/app/models/SuraDetails.dart';
 import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 
@@ -50,7 +51,7 @@ class _SuraScreenState extends State<SuraScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: _quran.isEmpty ? Colors.white : Colors.grey.shade100,
         appBar: AppBar(
           title: Text(widget.name),
         ),
@@ -58,8 +59,7 @@ class _SuraScreenState extends State<SuraScreen> {
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: selectedSura == null
-                ? const Center(
-                    child: CircularProgressIndicator()) // Loading state
+                ? LoadingHadithWidget(text: 'সুরা খোঁজা হচ্ছে')// Loading state
                 : Column(
                     children: [
                       Container(
