@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mumin/app/components/hadith/hadith_menu_bottomsheet_widget.dart';
 import 'package:mumin/app/components/hadith/hadith_name_code_widget.dart';
 import 'package:mumin/app/components/hadith/loading_hadith_widget.dart';
@@ -125,13 +126,17 @@ class _HadithsScreenState extends State<HadithsScreen> {
                                     overflow: TextOverflow.clip,
                                     text: TextSpan(
                                       text: '${hadith.number} ',
-                                      style: TextStyle(color: Colors.blue),
+                                      style: TextStyle(color: Colors.blue,
+                                      fontFamily: GoogleFonts.notoSerifBengali().fontFamily
+                                      ),
                                       children: [
                                         if (hadith.number != hadith.title)
                                           TextSpan(
                                             text: hadith.title ?? '',
                                             style:
-                                                TextStyle(color: Colors.black),
+                                                TextStyle(color: Colors.black,
+                                                fontFamily: GoogleFonts.notoSerifBengali().fontFamily,
+                                                ),
                                           ),
                                       ],
                                     ),
@@ -144,7 +149,8 @@ class _HadithsScreenState extends State<HadithsScreen> {
                                     Text(
                                       hadith.preface ?? '',
                                       style: TextStyle(
-                                          color: Colors.grey.shade700),
+                                          color: Colors.grey.shade700
+                                      ),
                                     ),
                                   ],
                                 ],
@@ -210,6 +216,7 @@ class _HadithsScreenState extends State<HadithsScreen> {
                                                           context: context,
                                                           builder: (context) =>
                                                               AlertDialog(
+                                                                backgroundColor: Colors.white,
                                                                 title: Text(
                                                                     validity.title ??
                                                                         ""),
