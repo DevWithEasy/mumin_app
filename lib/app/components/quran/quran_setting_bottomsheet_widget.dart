@@ -91,7 +91,7 @@ class QuranSettingBottomsheet extends StatelessWidget {
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: 8), // Add spacing for better UI
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: DropdownButton(
                     isExpanded:
