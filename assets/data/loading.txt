@@ -1,3 +1,28 @@
+  void startLoading() {
+    Future.delayed(const Duration(milliseconds: 10), () {
+      if (progressValue < 100) {
+        setState(() {
+          progressValue += 1; 
+        });
+        startLoading();
+      } else {
+        navigateToNextScreen();
+      }
+    });
+  }
+
+
+  
+              const SizedBox(height: 10),
+              Text(
+                    "${progressValue.toInt()}%",
+                    style: const TextStyle(fontSize: 12),
+                  ),
+
+
+
+
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Permissions for location and storage -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
