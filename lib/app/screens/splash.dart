@@ -1,4 +1,3 @@
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mumin/app/screens/main.dart';
@@ -28,13 +27,17 @@ class _SplashScreenState extends State<SplashScreen> {
       await saveLocationToSharedPreferences();
     }
 
-    // Request storage permission
-    var storageStatus = await Permission.storage.request();
+    Future.delayed(const Duration(seconds: 3), () {
+      navigateToNextScreen();
+    });
 
-    if (storageStatus.isDenied) {
-      // Redirect user to app settings
-      showSettingsDialog();
-    }
+    // // Request storage permission
+    // var storageStatus = await Permission.storage.status;
+
+    // if (storageStatus.isDenied) {
+    //   // Redirect user to app settings
+    //   showSettingsDialog();
+    // }
   }
 
   Future<void> saveLocationToSharedPreferences() async {
@@ -80,21 +83,18 @@ class _SplashScreenState extends State<SplashScreen> {
         actions: [
           TextButton(
             onPressed: () async {
-              // Request storage permission
-              AndroidDeviceInfo build = await DeviceInfoPlugin().androidInfo;
-              if (build.version.sdkInt >= 30) {
-                var storageStatus = await Permission.manageExternalStorage.request();
-                if (storageStatus.isGranted) {
-                  navigateToNextScreen();
-                }else{
-                  openAppSettings();
+              if (await Permission.storage.isDenied) {
+                var status = await Permission.storage.request();
+                if (!status.isGranted) {
+                  print("Storage permission denied.");
                 }
-              } else {
-                var storageStatus= await Permission.storage.request();
-                if (storageStatus.isGranted) {
-                  navigateToNextScreen();
-                }else{
-                  openAppSettings();
+              }
+
+              // Handle MANAGE_EXTERNAL_STORAGE for Android 11+
+              if (await Permission.manageExternalStorage.isDenied) {
+                var status = await Permission.manageExternalStorage.request();
+                if (!status.isGranted) {
+                  print("Manage external storage permission denied.");
                 }
               }
             },

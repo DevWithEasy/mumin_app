@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DuaScreen extends StatelessWidget {
   const DuaScreen({super.key});
@@ -12,9 +13,13 @@ class DuaScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text('Dua 1: "Selamat pagi, semoga hari ini lebih baik dan bersemangat dalam melaksanakan tugas-tugas yang ada."'),
-            SizedBox(height: 16),
-            Text('Dua 2: "Selamat sore, semoga hari ini lebih baik dan bersemangat dalam melaksanakan tugas-tugas yang ada."'),
+            TextButton(
+              onPressed: () async {
+                var str = await Permission.storage.status;
+                print(str);
+              },
+              child: Text('Check'),
+            )
           ],
         ),
       ),
