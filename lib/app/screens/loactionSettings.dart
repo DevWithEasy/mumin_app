@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:mumin/app/models/Country.dart';
 
 class LocationSettings extends StatefulWidget {
   const LocationSettings({super.key});
@@ -10,7 +13,7 @@ class LocationSettings extends StatefulWidget {
 }
 
 class _LocationSettingsState extends State<LocationSettings> {
-  List countries = [];
+  List<Country> _countries = [];
   String? selectedCountry;
   List<String>? selectedCities;
   String? selectedCity;
@@ -18,27 +21,25 @@ class _LocationSettingsState extends State<LocationSettings> {
   @override
   void initState() {
     super.initState();
-    fetchCountries();
+    _loadData();
   }
 
-  Future<void> fetchCountries() async {
-    const url = 'https://countriesnow.space/api/v0.1/countries';
+  Future<void> _loadData() async {
     try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
+      // Load the JSON file from assets
+      final String jsonString =
+          await rootBundle.loadString('assets/data/countries.json');
 
-        final List<dynamic> countryData = data['data'];
+      // Decode the JSON string as a List
+      final List<dynamic> jsonData = jsonDecode(jsonString);
 
-        setState(() {
-          countries = countryData;
-        });
-      } else {
-        showError(
-            'Failed to load countries. Status code: ${response.statusCode}');
-      }
-    } catch (error) {
-      showError('An error occurred: $error');
+      // Parse JSON and find the specific Surah by id
+      setState(() {
+        _countries = jsonData.map((json) => Country.fromJson(json)).toList();
+      });
+    } catch (e) {
+      // Handle any errors during loading or parsing
+      print('Error loading or parsing JSON: $e');
     }
   }
 
@@ -86,7 +87,7 @@ class _LocationSettingsState extends State<LocationSettings> {
         backgroundColor: Colors.white,
         shadowColor: Colors.blueGrey,
       ),
-      body: countries.isEmpty
+      body: _countries.isEmpty
           ? Center(child: const CircularProgressIndicator())
           : Padding(
             padding: const EdgeInsets.all(12),
@@ -97,24 +98,24 @@ class _LocationSettingsState extends State<LocationSettings> {
                       isExpanded: true,
                       value: selectedCountry,
                       hint: const Text('আপনার দেশ'),
-                      items: countries
+                      items: _countries
                           .map((country) {
                             return DropdownMenuItem(
                               value:
-                                  country['country'], // Use a unique identifier
-                              child: Text(country['country']),
+                                  country.country, // Use a unique identifier
+                              child: Text(country.country),
                             );
                           })
                           .toSet()
                           .toList(), // Convert to Set to avoid duplicates
                       onChanged: (value) {
-                        if (value != null && value is String) {
+                        if (value != null) {
                           // Ensure value is a String
                           setState(() {
                             selectedCountry = value;
                             selectedCities = List<String>.from(
-                                countries.firstWhere(
-                                    (c) => c['country'] == value)['cities']);
+                                _countries.firstWhere(
+                                    (c) => c.country == value).cities);
                           });
                         }
                       },

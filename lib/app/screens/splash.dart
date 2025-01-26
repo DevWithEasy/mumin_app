@@ -1,8 +1,9 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mumin/app/screens/main.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,26 +22,26 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> requestPermissions() async {
     // Request location permission
     var locationStatus = await Permission.location.request();
+
+    // Check if all permissions are granted
+    if (locationStatus.isGranted) {
+      await saveLocationToSharedPreferences();
+    }
+
     // Request storage permission
     var storageStatus = await Permission.storage.request();
 
-    // Check if all permissions are granted
-    if (locationStatus.isGranted && storageStatus.isGranted) {
-      await saveLocationToSharedPreferences();
-      navigateToNextScreen();
-    } else if (locationStatus.isPermanentlyDenied || storageStatus.isPermanentlyDenied) {
+    if (storageStatus.isDenied) {
       // Redirect user to app settings
       showSettingsDialog();
-    } else {
-      // If permissions are denied, retry
-      showRetryDialog();
     }
   }
 
   Future<void> saveLocationToSharedPreferences() async {
     try {
       // Check if location services are enabled
-      bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
+      bool isLocationServiceEnabled =
+          await Geolocator.isLocationServiceEnabled();
       if (!isLocationServiceEnabled) {
         throw Exception("Location services are disabled.");
       }
@@ -55,7 +56,8 @@ class _SplashScreenState extends State<SplashScreen> {
       await prefs.setDouble("latitude", position.latitude);
       await prefs.setDouble("longitude", position.longitude);
 
-      print("Location saved: Lat=${position.latitude}, Lon=${position.longitude}");
+      print(
+          "Location saved: Lat=${position.latitude}, Lon=${position.longitude}");
     } catch (e) {
       print("Error fetching location: $e");
     }
@@ -72,42 +74,31 @@ class _SplashScreenState extends State<SplashScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Permission Required"),
+        title: const Text("অনুমতি প্রয়োজন"),
         content: const Text(
-            "Permissions for location and storage are required. Please enable them in settings."),
+            "আপনার নামাযের সঠিক পেতে অবস্থান ও ডাটাবেজের ফাইল গুলো ম্যানেজ করার জন্য লোকেশন ও স্টোরেজের অনুমতি দিতে হবে।"),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text("Cancel"),
-          ),
-          TextButton(
-            onPressed: () {
-              openAppSettings();
+            onPressed: () async {
+              // Request storage permission
+              AndroidDeviceInfo build = await DeviceInfoPlugin().androidInfo;
+              if (build.version.sdkInt >= 30) {
+                var storageStatus = await Permission.manageExternalStorage.request();
+                if (storageStatus.isGranted) {
+                  navigateToNextScreen();
+                }else{
+                  openAppSettings();
+                }
+              } else {
+                var storageStatus= await Permission.storage.request();
+                if (storageStatus.isGranted) {
+                  navigateToNextScreen();
+                }else{
+                  openAppSettings();
+                }
+              }
             },
-            child: const Text("Open Settings"),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void showRetryDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Permission Denied"),
-        content: const Text("Please allow location and storage permissions to proceed."),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text("Cancel"),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              requestPermissions(); // Retry permission request
-            },
-            child: const Text("Retry"),
+            child: const Text("অনুমতি দিন"),
           ),
         ],
       ),
@@ -138,9 +129,7 @@ class _SplashScreenState extends State<SplashScreen> {
               const Text(
                 'মুমিন',
                 style: TextStyle(fontSize: 20),
-              ),
-              const SizedBox(height: 20),
-              const CircularProgressIndicator(), // Show loading indicator
+              ), // Show loading indicator
             ],
           ),
         ),
