@@ -87,6 +87,25 @@ flutter:
     - assets/images/mumin/salah.png
     - assets/images/mumin/tasbih.png
     - assets/images/mumin/zakat.png
+    - assets/images/dua/alhamdulillah.png
+    - assets/images/dua/cleaning.png
+    - assets/images/dua/dressing.png
+    - assets/images/dua/eat.png
+    - assets/images/dua/eating.png
+    - assets/images/dua/family.png
+    - assets/images/dua/hajj.png
+    - assets/images/dua/illness.png
+    - assets/images/dua/nature.png
+    - assets/images/dua/quran_dua.png
+    - assets/images/dua/ramadan.png
+    - assets/images/dua/ruqiah.png
+    - assets/images/dua/salah.png
+    - assets/images/dua/shield.png
+    - assets/images/dua/sleeping.png
+    - assets/images/dua/sociality.png
+    - assets/images/dua/suntime_sunset.png
+    - assets/images/dua/traveling.png
+    - assets/images/dua/wealth.png
     - assets/images/salah/sujud.png
     - assets/data/asmaul_husna.json
     - assets/data/kalimas.json
