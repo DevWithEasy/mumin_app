@@ -18,7 +18,7 @@ class MuminScreen extends StatelessWidget {
     {'title': 'হাদিস', 'image': 'assets/images/mumin/hadis.png', 'screen': HadithScreen()},
     {'title': 'হালাল হারাম', 'image': 'assets/images/mumin/halal.png', 'screen': HalamHaramScreen()},
     {'title': 'কালিমা', 'image': 'assets/images/mumin/kalima.png', 'screen': KalimaScreen()},
-    {'title': 'কুরআন', 'image': 'assets/images/mumin/quran.png', 'screen': QuranScreen()},
+    {'title': 'কুরআন', 'image': 'assets/images/dua/quran_dua.png', 'screen': QuranScreen()},
     {'title': 'রোজা', 'image': 'assets/images/mumin/ramadan.png', 'screen': RamadanScreen()},
     {'title': 'নামায', 'image': 'assets/images/mumin/salah.png', 'screen': SalahScreen()},
     {'title': 'তাসবিহ', 'image': 'assets/images/mumin/tasbih.png', 'screen': TasbihScreen()},

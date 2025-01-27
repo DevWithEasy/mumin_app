@@ -7,6 +7,7 @@ class Dua {
   final String reference;
   final String top;
   final String translations;
+  final String? transliteration;
 
   Dua({
     required this.id,
@@ -17,6 +18,7 @@ class Dua {
     required this.reference,
     required this.top,
     required this.translations,
+    required this.transliteration,
   });
 
   factory Dua.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class Dua {
       reference: json['reference'] ?? '',
       top: json['top'] ?? '',
       translations: json['translations'],
+      transliteration: json['transliteration'],
     );
   }
 
@@ -42,6 +45,7 @@ class Dua {
       'reference': reference,
       'top': top,
       'translations': translations,
+      'transliteration': transliteration,
     };
   }
 }

@@ -55,7 +55,7 @@ class _QuranScreenState extends State<QuranScreen> {
             Column(
               children: [
                 Image.asset(
-                  'assets/images/mumin/quran.png',
+                  'assets/images/dua/quran_dua.png',
                   height: 80,
                   width: 80,
                 ),

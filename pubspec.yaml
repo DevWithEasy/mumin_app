@@ -91,7 +91,6 @@ flutter:
     - assets/images/dua/cleaning.png
     - assets/images/dua/dressing.png
     - assets/images/dua/eat.png
-    - assets/images/dua/eating.png
     - assets/images/dua/family.png
     - assets/images/dua/hajj.png
     - assets/images/dua/illness.png
@@ -113,6 +112,8 @@ flutter:
     - assets/data/validities.json
     - assets/data/quran_suras.json
     - assets/data/quran.json
+    - assets/data/dua/dua_category.json
+    - assets/data/dua/dua_collection.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
