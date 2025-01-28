@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mumin/app/models/SalahCategory.dart';
+import 'package:mumin/app/screens/salah/salah_topic.dart';
 import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 
 class SalahScreen extends StatefulWidget {
@@ -95,7 +96,15 @@ class _SalahScreenState extends State<SalahScreen> {
                                   borderRadius: BorderRadius.circular(10),
                                   side: BorderSide(
                                       color: Colors.grey.shade300, width: 1)),
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context, 
+                                  MaterialPageRoute(builder: (contex)=>SalahTopicScreen(
+                                    catName: category.heading,
+                                    catId: category.id,
+                                    currentIndex: topicIndex,
+                                  )));
+                              },
                             ),
                           );
                         },
