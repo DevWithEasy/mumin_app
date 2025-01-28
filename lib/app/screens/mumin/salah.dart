@@ -60,7 +60,7 @@ class _SalahScreenState extends State<SalahScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   final category = _categories[index];
-          
+
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,13 +87,15 @@ class _SalahScreenState extends State<SalahScreen> {
                               leading: CircleAvatar(
                                 backgroundColor: Colors.grey.shade200,
                                 child: Text(
-                                  convertToBanglaNumbers((topicIndex+1).toString()),
+                                  convertToBanglaNumbers(
+                                      (topicIndex + 1).toString()),
                                 ),
                               ),
-                              shape: Border.all(color: Colors.grey.shade200),
-                              onTap: () {
-                                
-                              },
+                              shape: ContinuousRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  side: BorderSide(
+                                      color: Colors.grey.shade300, width: 1)),
+                              onTap: () {},
                             ),
                           );
                         },
