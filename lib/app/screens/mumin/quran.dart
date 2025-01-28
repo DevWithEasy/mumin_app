@@ -20,7 +20,7 @@ class _QuranScreenState extends State<QuranScreen> {
     try {
       // Load the JSON file from assets
       final String jsonString =
-          await rootBundle.loadString('assets/data/quran_suras.json');
+          await rootBundle.loadString('assets/data/quran/quran_suras.json');
 
       // Decode the JSON string as a List
       final List<dynamic> jsonData = jsonDecode(jsonString);

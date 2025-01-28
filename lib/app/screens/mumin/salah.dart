@@ -1,20 +1,110 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'dart:convert';
 
-class SalahScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mumin/app/models/SalahCategory.dart';
+import 'package:mumin/app/utils/convert_to_bangla_number.dart';
+
+class SalahScreen extends StatefulWidget {
   const SalahScreen({super.key});
-  final String html = '<p><strong>১. তাহারাত বা পবিত্রতা অর্জন:&nbsp;</strong>প্রথমে ওযু করে পবিত্র হতে হবে। কারণ পবিত্রতাবিহীন সালাত কবুল হয় না (মুসলিম: ২২৪)। তবে কোন কারণে গোসল ফরয হলে, এর পূর্বে অবশ্যই ফরয গোসল সম্পন্ন করে নিতে হবে। ইসলামে যেকোন আমলের ক্ষেত্রে পবিত্রতা অর্জন অপরিহার্য একটি বিষয়। প্রত্যেক মুসলিম নর-নারীর জন্য এ বিষয়ের জ্ঞান অর্জন ফরয।</p><p><br></p>';
+
+  @override
+  State<SalahScreen> createState() => _SalahScreenState();
+}
+
+class _SalahScreenState extends State<SalahScreen> {
+  List<SalahCategory> _categories = [];
+
+  Future<void> _loadData() async {
+    try {
+      // Load the JSON file from assets
+      final String jsonString =
+          await rootBundle.loadString('assets/data/salah/salah_category.json');
+
+      // Decode the JSON string as a List
+      final List<dynamic> jsonData = jsonDecode(jsonString);
+
+      // Update the state with the parsed data
+      setState(() {
+        _categories =
+            jsonData.map((json) => SalahCategory.fromJson(json)).toList();
+      });
+    } catch (e) {
+      // Handle any errors during loading or parsing
+      print('Error loading or parsing JSON: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Salah'),
+        title: const Text('নামায'),
+        elevation: 1,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Html(data: html)
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            children: [
+              ListView.builder(
+                itemCount: _categories.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final category = _categories[index];
+          
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        category.heading,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const Divider(),
+                      // Use ListView.builder to render topics for better performance
+                      ListView.builder(
+                        itemCount: category.topics.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, topicIndex) {
+                          final topic = category.topics[topicIndex];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: ListTile(
+                              title: Text(topic.title),
+                              leading: CircleAvatar(
+                                backgroundColor: Colors.grey.shade200,
+                                child: Text(
+                                  convertToBanglaNumbers((topicIndex+1).toString()),
+                                ),
+                              ),
+                              shape: Border.all(color: Colors.grey.shade200),
+                              onTap: () {
+                                
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 16), // Space between categories
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
