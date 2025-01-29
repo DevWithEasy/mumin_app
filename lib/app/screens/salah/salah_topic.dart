@@ -24,28 +24,26 @@ class _SalahTopicScreenState extends State<SalahTopicScreen> {
   late PageController _pageController;
   late int _currentIndex;
 
-  Future<void> _loadData() async {
-    try {
-      // Load the JSON file from assets
-      final String jsonString =
-          await rootBundle.loadString('assets/data/salah/salah_topics.json');
-      // Decode the JSON string
-      final List<dynamic> jsondata = jsonDecode(jsonString);
+Future<void> _loadData() async {
+  try {
+    final String jsonString =
+        await rootBundle.loadString('assets/data/salah/salah_topics.json');
+    final List<dynamic> jsondata = jsonDecode(jsonString);
 
-      // Update the state with the parsed data
-      setState(() {
-        _salahTopics = jsondata
-            .where((element) => element['category'] == widget.catId)
-            .toList()
-            .map((json) => SalahTopic.fromJson(json))
-            .toList();
-      });
-    } catch (e) {
-      // Handle any errors during loading or parsing
-      print('Error loading or parsing JSON: $e');
-    }
+    setState(() {
+      _salahTopics = jsondata
+          .where((element) => element['category'] == widget.catId)
+          .toList()
+          .map((json) => SalahTopic.fromJson(json))
+          .toList();
+
+      // Initialize PageController after _salahTopics is populated
+      _pageController = PageController(initialPage: _currentIndex);
+    });
+  } catch (e) {
+    print('Error loading or parsing JSON: $e');
   }
-
+}
 
 
   @override
@@ -64,6 +62,8 @@ class _SalahTopicScreenState extends State<SalahTopicScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.currentIndex);
+    print(_currentIndex);
     return Scaffold(
       backgroundColor: Colors.white,
         appBar: AppBar(
@@ -76,7 +76,9 @@ class _SalahTopicScreenState extends State<SalahTopicScreen> {
             ),
           ],
         ),
-        body: PageView.builder(
+        body: _salahTopics.isEmpty? 
+        Center(child: CircularProgressIndicator()) :
+        PageView.builder(
           controller: _pageController,
           itemCount: _salahTopics.length,
           itemBuilder: (context,int index){

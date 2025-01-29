@@ -1,18 +1,19 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mumin/app/models/SalahCategory.dart';
 import 'package:mumin/app/screens/salah/salah_topic.dart';
 import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 
-class SalahScreen extends StatefulWidget {
-  const SalahScreen({super.key});
+class SalaturRasulScreen extends StatefulWidget {
+  const SalaturRasulScreen({super.key});
 
   @override
-  State<SalahScreen> createState() => _SalahScreenState();
+  State<SalaturRasulScreen> createState() => _SalaturRasulScreenState();
 }
 
-class _SalahScreenState extends State<SalahScreen> {
+class _SalaturRasulScreenState extends State<SalaturRasulScreen> {
   List<SalahCategory> _categories = [];
 
   Future<void> _loadData() async {
