@@ -106,7 +106,18 @@ flutter:
     - assets/images/dua/suntime_sunset.png
     - assets/images/dua/traveling.png
     - assets/images/dua/wealth.png
-    - assets/images/salah/sujud.png
+    - assets/images/salah/adhan.png
+    - assets/images/salah/dua.png
+    - assets/images/salah/niyat.png
+    - assets/images/salah/rakah_break.png
+    - assets/images/salah/ruku.png
+    - assets/images/salah/sajdah.png
+    - assets/images/salah/salam.png
+    - assets/images/salah/sana.png
+    - assets/images/salah/shower.png
+    - assets/images/salah/takber.png
+    - assets/images/salah/tasahadud.png
+    - assets/images/salah/wudu.png
     - assets/data/asmaul_husna.json
     - assets/data/kalimas.json
     - assets/data/hadith.json
