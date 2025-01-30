@@ -1,0 +1,77 @@
+[
+    {
+        "cat_icon": "assets/images/ruqiah/abt_ruqya.png",
+        "cat_id": 1,
+        "category_name": "রুকিয়াহ সম্পর্কে"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/do_ruqya.png",
+        "cat_id": 2,
+        "category_name": "সকল রোগের রুকিয়াহ করুন"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/next_step.png",
+        "cat_id": 3,
+        "category_name": "রুকইয়াহর পরবর্তী পদক্ষেপ"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/jin.png",
+        "cat_id": 4,
+        "category_name": "জিনকেন্দ্রিক অসুস্থতা"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/jadu-tona.png",
+        "cat_id": 5,
+        "category_name": "জাদুটোনা কেন্দ্রিক অসুস্থতা"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/bodnozor.png",
+        "cat_id": 6,
+        "category_name": "বদনজর সম্পর্কিত অসুস্থতা"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/jadur_ruqya.png",
+        "cat_id": 7,
+        "category_name": "বিভিন্ন জাদুর জন্য রুকিয়াহ"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/sickness_ruqya.png",
+        "cat_id": 8,
+        "category_name": "অন্যান্য অসুস্থতার জন্য রুকিয়াহ"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/next_step.png",
+        "cat_id": 9,
+        "category_name": "রুকইয়াহ পদ্ধতির সংশোধন"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/raqi.png",
+        "cat_id": 10,
+        "category_name": "রাক্কী পরিচিতি"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/upokoron.png",
+        "cat_id": 11,
+        "category_name": "রুকিয়াহর জন্য উপকরন সমূহ"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/hijama.png",
+        "cat_id": 12,
+        "category_name": "হিজামা"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/ditox.png",
+        "cat_id": 13,
+        "category_name": "সাত দিনের ডিটক্সিফিকেশন প্রোগ্রাম"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/was-wasa.png",
+        "cat_id": 14,
+        "category_name": "ওয়াসওয়াসা রোগ"
+    },
+    {
+        "cat_icon": "assets/images/ruqiah/video.png",
+        "cat_id": 15,
+        "category_name": "রুকিয়াহ সম্পর্কিত ভিডিওসমূহ"
+    }
+]

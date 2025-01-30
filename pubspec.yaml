@@ -85,6 +85,7 @@ flutter:
     - assets/images/mumin/kalima.png
     - assets/images/mumin/quran.png
     - assets/images/mumin/ramadan.png
+    - assets/images/mumin/ruqyah.png
     - assets/images/mumin/salah.png
     - assets/images/mumin/tasbih.png
     - assets/images/mumin/zakat.png
@@ -106,6 +107,20 @@ flutter:
     - assets/images/dua/suntime_sunset.png
     - assets/images/dua/traveling.png
     - assets/images/dua/wealth.png
+    - assets/images/ruqyah/abt_ruqya.png
+    - assets/images/ruqyah/do_ruqya.png
+    - assets/images/ruqyah/next_step.png
+    - assets/images/ruqyah/jin.png
+    - assets/images/ruqyah/jadu_tona.png
+    - assets/images/ruqyah/bodnozor.png
+    - assets/images/ruqyah/jadur_ruqya.png
+    - assets/images/ruqyah/sickness_ruqya.png
+    - assets/images/ruqyah/raqi.png
+    - assets/images/ruqyah/upokoron.png
+    - assets/images/ruqyah/hijama.png
+    - assets/images/ruqyah/ditox.png
+    - assets/images/ruqyah/was_wasa.png
+    - assets/images/ruqyah/video.png
     - assets/images/salah/adhan.png
     - assets/images/salah/dua.png
     - assets/images/salah/niyat.png

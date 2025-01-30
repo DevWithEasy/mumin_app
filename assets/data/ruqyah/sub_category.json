@@ -1,0 +1,587 @@
+[
+    {
+        "cat_id": 1,
+        "subcat_id": 1,
+        "subcat_name": "রুকিয়াহ কাকে বলে?"
+    },
+    {
+        "cat_id": 1,
+        "subcat_id": 2,
+        "subcat_name": "সুন্নাহ-তে বর্ণিত রুকিয়াহ সমূহ"
+    },
+    {
+        "cat_id": 1,
+        "subcat_id": 3,
+        "subcat_name": "কিভাবে রুকিয়াহর গোসল করবেন"
+    },
+    {
+        "cat_id": 1,
+        "subcat_id": 4,
+        "subcat_name": "রুকিয়াহ করে কি পারিশ্রমিক নেওয়া যায়?"
+    },
+    {
+        "cat_id": 1,
+        "subcat_id": 5,
+        "subcat_name": "রুকিয়াহ কি অমুসলিমদের জন্য প্রযােজ্য?"
+    },
+    {
+        "cat_id": 1,
+        "subcat_id": 6,
+        "subcat_name": "রুকিয়াহর যৌক্তিকতা ও কার্যকারিতা"
+    },
+    {
+        "cat_id": 1,
+        "subcat_id": 7,
+        "subcat_name": "যে ঝাড়ফুঁক রুকিয়াহ শারইয়া হবে না"
+    },
+    {
+        "cat_id": 2,
+        "subcat_id": 8,
+        "subcat_name": "সংক্ষিপ্ত রুকিয়াহ"
+    },
+    {
+        "cat_id": 2,
+        "subcat_id": 9,
+        "subcat_name": "মধ্যম পর্যায়ের রুকিয়াহ"
+    },
+    {
+        "cat_id": 2,
+        "subcat_id": 10,
+        "subcat_name": "দীর্ঘ রুকিয়াহ"
+    },
+    {
+        "cat_id": 3,
+        "subcat_id": 11,
+        "subcat_name": "ভূুমিকা"
+    },
+    {
+        "cat_id": 3,
+        "subcat_id": 12,
+        "subcat_name": "রোগী যদি ঝাঁকুনি অনুভব করেন এবং জ্বিন যদি কথা বলে"
+    },
+    {
+        "cat_id": 3,
+        "subcat_id": 13,
+        "subcat_name": "রুকইয়াহ করার পর রোগীর যদি শরীরের কম্পন না হয়"
+    },
+    {
+        "cat_id": 3,
+        "subcat_id": 14,
+        "subcat_name": "রুকইয়াহর পাশাপাশি রোগীকে যা যা করতে হবে"
+    },
+    {
+        "cat_id": 4,
+        "subcat_id": 15,
+        "subcat_name": "জ্বীন আছরের ব্যাপারে ইসলাম কি বলে"
+    },
+    {
+        "cat_id": 4,
+        "subcat_id": 16,
+        "subcat_name": "জ্বীন আক্রান্ত হওয়ার লক্ষণ"
+    },
+    {
+        "cat_id": 4,
+        "subcat_id": 17,
+        "subcat_name": "জ্বিনের আক্রমণ ও অনিষ্টতা থেকে রক্ষার উপায়"
+    },
+    {
+        "cat_id": 4,
+        "subcat_id": 18,
+        "subcat_name": "জ্বিন দ্বারা সংঘটিত রোগ ও ক্ষতির ধরণ"
+    },
+    {
+        "cat_id": 4,
+        "subcat_id": 19,
+        "subcat_name": "জ্বিন সম্পর্কে মানুষের অযৌক্তিক ভয়ের চিকিৎসা"
+    },
+    {
+        "cat_id": 4,
+        "subcat_id": 20,
+        "subcat_name": "বাড়ি থেকে কিভাবে জ্বিন বিতাড়িত করা যায়?"
+    },
+    {
+        "cat_id": 4,
+        "subcat_id": 21,
+        "subcat_name": "যেসব কারণে জ্বিনরা মানুষের ওপর প্রভাব খাটাতে পারে"
+    },
+    {
+        "cat_id": 4,
+        "subcat_id": 22,
+        "subcat_name": "যেসব আয়াত জ্বিনকে শাস্তি দেয়"
+    },
+    {
+        "cat_id": 4,
+        "subcat_id": 23,
+        "subcat_name": "জ্বিন যদি প্রতিজ্ঞা ভঙ্গ করে এবং আবার ফিরে আসে, তাহলে যে যে আয়াত পাঠ করতে হবে"
+    },
+    {
+        "cat_id": 4,
+        "subcat_id": 24,
+        "subcat_name": "জ্বিন ও মানুষের ভালোবাসার চিকিৎসা"
+    },
+    {
+        "cat_id": 4,
+        "subcat_id": 25,
+        "subcat_name": "জ্বিনের ক্ষতি এড়ানো এবং শয়তান থেকে রক্ষার দশটি উপায়"
+    },
+    {
+        "cat_id": 5,
+        "subcat_id": 26,
+        "subcat_name": "জাদুটোনার ব্যাপারে ইসলাম কি বলে"
+    },
+    {
+        "cat_id": 5,
+        "subcat_id": 27,
+        "subcat_name": "সালাফদের মতামত"
+    },
+    {
+        "cat_id": 5,
+        "subcat_id": 28,
+        "subcat_name": "যাদুর বিভিন্ন প্রকার"
+    },
+    {
+        "cat_id": 5,
+        "subcat_id": 29,
+        "subcat_name": "জাদুর চিকিৎসা সম্পর্কিত কিছু তথ্য"
+    },
+    {
+        "cat_id": 5,
+        "subcat_id": 30,
+        "subcat_name": "যেসব শর্ত জাদুকরের জন্য অবশ্য পালনীয়"
+    },
+    {
+        "cat_id": 5,
+        "subcat_id": 31,
+        "subcat_name": "জাদুকর সমাজে যা যা করেন"
+    },
+    {
+        "cat_id": 5,
+        "subcat_id": 32,
+        "subcat_name": "জাদুকর যেভাবে জাদুটোনা করেন"
+    },
+    {
+        "cat_id": 5,
+        "subcat_id": 33,
+        "subcat_name": "আক্রান্ত ব্যক্তির ওপর জাদুটোনার প্রভাব"
+    },
+    {
+        "cat_id": 5,
+        "subcat_id": 34,
+        "subcat_name": "জাদুটোনা সম্পর্কিত কার্যকর তথ্য"
+    },
+    {
+        "cat_id": 5,
+        "subcat_id": 35,
+        "subcat_name": "যেসব লক্ষণ দিয়ে জাদুকরকে চেনা যায়"
+    },
+    {
+        "cat_id": 5,
+        "subcat_id": 36,
+        "subcat_name": "জাদুকরের কাছে যাওয়ার ব্যাপারে সতর্কতা"
+    },
+    {
+        "cat_id": 5,
+        "subcat_id": 37,
+        "subcat_name": "জাদুটোনা থেকে কিভাবে নিজেকে রক্ষা করবেন?"
+    },
+    {
+        "cat_id": 6,
+        "subcat_id": 38,
+        "subcat_name": "বদনজর সম্পর্কে ইসলামী আকীদা"
+    },
+    {
+        "cat_id": 6,
+        "subcat_id": 39,
+        "subcat_name": "বদনজর কাকে বলে ও তার প্রতিকার কি?"
+    },
+    {
+        "cat_id": 6,
+        "subcat_id": 40,
+        "subcat_name": "কিভাবে বদনজরের ধৌতকাজ সম্পন্ন করতে হবে?"
+    },
+    {
+        "cat_id": 6,
+        "subcat_id": 41,
+        "subcat_name": "হিংসাকারীর বৈশিষ্ট্য জানা যাতে তাকে এড়িয়ে চলা যায়"
+    },
+    {
+        "cat_id": 6,
+        "subcat_id": 42,
+        "subcat_name": "রুকিয়া ও যিকিরের মাধ্যমে বদনজরের চিকিৎসা"
+    },
+    {
+        "cat_id": 7,
+        "subcat_id": 43,
+        "subcat_name": "বিচ্ছেদ ঘটানোর যাদু"
+    },
+    {
+        "cat_id": 7,
+        "subcat_id": 44,
+        "subcat_name": "আসক্ত করার যাদু"
+    },
+    {
+        "cat_id": 7,
+        "subcat_id": 45,
+        "subcat_name": "নজরবন্দী বা ভেল্কিবাজির যাদু"
+    },
+    {
+        "cat_id": 7,
+        "subcat_id": 46,
+        "subcat_name": "পাগল করা যাদু"
+    },
+    {
+        "cat_id": 7,
+        "subcat_id": 47,
+        "subcat_name": "একাকিত্ব ও নির্জনতা পছন্দের যাদু"
+    },
+    {
+        "cat_id": 7,
+        "subcat_id": 48,
+        "subcat_name": "অজানা আওয়াজ শুনতে পাওয়া"
+    },
+    {
+        "cat_id": 7,
+        "subcat_id": 49,
+        "subcat_name": "কাউকে যাদুর মাধ্যমে শারীরিকভাবে রোগী বানিয়ে দেয়া"
+    },
+    {
+        "cat_id": 7,
+        "subcat_id": 50,
+        "subcat_name": "ইস্তেহাযা অর্থাৎ জরায়ু থেকে অনিয়মিত দীর্ঘ মেয়াদী স্রাবের যাদু"
+    },
+    {
+        "cat_id": 7,
+        "subcat_id": 51,
+        "subcat_name": "বিয়ে ভাঙ্গার যাদু"
+    },
+    {
+        "cat_id": 7,
+        "subcat_id": 52,
+        "subcat_name": "যৌন অক্ষমতার চিকিৎসা"
+    },
+    {
+        "cat_id": 7,
+        "subcat_id": 53,
+        "subcat_name": "গুরুত্বপূর্ণ কিছু কথা"
+    },
+    {
+        "cat_id": 8,
+        "subcat_id": 54,
+        "subcat_name": "মানসিক রোগের চিকিৎসায় আল কুরআন মহৌষধ"
+    },
+    {
+        "cat_id": 8,
+        "subcat_id": 55,
+        "subcat_name": "মানসিক ও স্নায়বিক রোগের রুকিয়াহ"
+    },
+    {
+        "cat_id": 8,
+        "subcat_id": 56,
+        "subcat_name": "শয়তানের কারণে ভয় পেলে কী করা উচিত"
+    },
+    {
+        "cat_id": 8,
+        "subcat_id": 57,
+        "subcat_name": "যার কাছে শয়তান উপস্থিত হয় তার যা অনুসরণ করা উচিত"
+    },
+    {
+        "cat_id": 8,
+        "subcat_id": 58,
+        "subcat_name": "যদি কারো কাছে গুল জ্বিন উপস্থিত হয় তখন তার কী বলা উচিত"
+    },
+    {
+        "cat_id": 9,
+        "subcat_id": 59,
+        "subcat_name": "ভূমিকা"
+    },
+    {
+        "cat_id": 9,
+        "subcat_id": 60,
+        "subcat_name": "অশুদ্ধ বই"
+    },
+    {
+        "cat_id": 9,
+        "subcat_id": 61,
+        "subcat_name": "জ্ঞানহীন ব্যক্তিদের রুকইয়াহ করা"
+    },
+    {
+        "cat_id": 9,
+        "subcat_id": 62,
+        "subcat_name": "সালাফদের পথ আঁকড়ে ধরা ও বিদ'আত বিসর্জন"
+    },
+    {
+        "cat_id": 9,
+        "subcat_id": 63,
+        "subcat_name": "আল্লাহ সম্পর্কে না জেনেই কিছু বলা"
+    },
+    {
+        "cat_id": 9,
+        "subcat_id": 64,
+        "subcat_name": "অনভিজ্ঞদের কাছে রুকইয়াহর পরামর্শ চাওয়া"
+    },
+    {
+        "cat_id": 9,
+        "subcat_id": 65,
+        "subcat_name": "রুকিয়াহর বিনিময়ে পারিশ্রমিক নেওয়া"
+    },
+    {
+        "cat_id": 9,
+        "subcat_id": 66,
+        "subcat_name": "রক্বির কিছু ভূল"
+    },
+    {
+        "cat_id": 10,
+        "subcat_id": 67,
+        "subcat_name": "রাক্কী বলতে কি বুঝায়?"
+    },
+    {
+        "cat_id": 10,
+        "subcat_id": 68,
+        "subcat_name": "একজন ভালো রাক্কীর বৈশিষ্ট্য"
+    },
+    {
+        "cat_id": 10,
+        "subcat_id": 69,
+        "subcat_name": "জিনের চিকিৎসা রাক্কীর জরুরী জ্ঞাতব্য বিষয়"
+    },
+    {
+        "cat_id": 10,
+        "subcat_id": 70,
+        "subcat_name": "যেসকল রক্বিদের ব্যাপারে সতর্ক থাকবেন"
+    },
+    {
+        "cat_id": 10,
+        "subcat_id": 71,
+        "subcat_name": "রক্বিকে অবশ্যই যেসকল কাজ গুলো করতে হবে"
+    },
+    {
+        "cat_id": 11,
+        "subcat_id": 72,
+        "subcat_name": "মধু"
+    },
+    {
+        "cat_id": 11,
+        "subcat_id": 73,
+        "subcat_name": "কালোজিরা"
+    },
+    {
+        "cat_id": 11,
+        "subcat_id": 74,
+        "subcat_name": "জাদুটোনার চিকিৎসায় সোনামুখীর রস পান"
+    },
+    {
+        "cat_id": 11,
+        "subcat_id": 75,
+        "subcat_name": "জাদুটোনার জন্য কাপিং (কাঁচপ্রয়োগে চিকিৎসা) থেরাপী"
+    },
+    {
+        "cat_id": 11,
+        "subcat_id": 76,
+        "subcat_name": "অলিভ অয়েল (যাইতুনের তেল)"
+    },
+    {
+        "cat_id": 11,
+        "subcat_id": 77,
+        "subcat_name": "বরই পাতা অথবা কর্পূর পাতা"
+    },
+    {
+        "cat_id": 11,
+        "subcat_id": 78,
+        "subcat_name": "ভারতীয় কস্টাস (সুগন্ধীযুক্ত বৃক্ষ) বৃক্ষের তৈরি নাকের ড্রপ"
+    },
+    {
+        "cat_id": 11,
+        "subcat_id": 79,
+        "subcat_name": "যমযমের পানি পান"
+    },
+    {
+        "cat_id": 12,
+        "subcat_id": 80,
+        "subcat_name": "হিজামা কি ?"
+    },
+    {
+        "cat_id": 12,
+        "subcat_id": 81,
+        "subcat_name": "হিজামা করা সুন্নাহ"
+    },
+    {
+        "cat_id": 12,
+        "subcat_id": 82,
+        "subcat_name": "হিজামা সংক্রান্ত কিছু সহীহ হাদীস"
+    },
+    {
+        "cat_id": 12,
+        "subcat_id": 83,
+        "subcat_name": "হিজামা ফেরেস্তাদের দ্বারা সুপারিশকৃত"
+    },
+    {
+        "cat_id": 12,
+        "subcat_id": 84,
+        "subcat_name": "হিজামা করার স্থানসমূহ"
+    },
+    {
+        "cat_id": 12,
+        "subcat_id": 85,
+        "subcat_name": "মহিলাদের জন্য হিজামা"
+    },
+    {
+        "cat_id": 12,
+        "subcat_id": 86,
+        "subcat_name": "হিজামার পারিশ্রমিক নেওয়া কি অবৈধ?"
+    },
+    {
+        "cat_id": 12,
+        "subcat_id": 87,
+        "subcat_name": "বৈধতার হাদীসসমূহ"
+    },
+    {
+        "cat_id": 12,
+        "subcat_id": 88,
+        "subcat_name": "হিজামার জন্য প্রস্তুতি"
+    },
+    {
+        "cat_id": 12,
+        "subcat_id": 89,
+        "subcat_name": "হিজামার উত্তম সময়সমুহ"
+    },
+    {
+        "cat_id": 12,
+        "subcat_id": 90,
+        "subcat_name": "হিজামার জন্য উত্তম দিন সোম, মঙ্গল ও বৃহস্পতিবার"
+    },
+    {
+        "cat_id": 12,
+        "subcat_id": 91,
+        "subcat_name": "হিজামা (Cupping) লাগানোর সময় মনের অবস্থা"
+    },
+    {
+        "cat_id": 12,
+        "subcat_id": 92,
+        "subcat_name": "হিজামার মাধ্যমে যেসব রোগ প্রতিরোধ ও চিকিৎসা করা হয়"
+    },
+    {
+        "cat_id": 13,
+        "subcat_id": 93,
+        "subcat_name": "ভূমিকা"
+    },
+    {
+        "cat_id": 13,
+        "subcat_id": 94,
+        "subcat_name": "শুরু করার পূর্বে"
+    },
+    {
+        "cat_id": 13,
+        "subcat_id": 95,
+        "subcat_name": "নিম্নলিখিত জিনিসগুলি প্রস্তুত রাখতে হবে"
+    },
+    {
+        "cat_id": 13,
+        "subcat_id": 96,
+        "subcat_name": "কোন সূরাগুলো তেলাওয়াত করতে হবে"
+    },
+    {
+        "cat_id": 13,
+        "subcat_id": 97,
+        "subcat_name": "প্রথম তিন দিন"
+    },
+    {
+        "cat_id": 13,
+        "subcat_id": 98,
+        "subcat_name": "চতুর্থ থেকে সপ্তম দিন"
+    },
+    {
+        "cat_id": 13,
+        "subcat_id": 99,
+        "subcat_name": "ফলাফল যা হতে পারে"
+    },
+    {
+        "cat_id": 14,
+        "subcat_id": 100,
+        "subcat_name": "ভূমিকা"
+    },
+    {
+        "cat_id": 14,
+        "subcat_id": 101,
+        "subcat_name": "চিন্তাভাবনাগুলো শয়তান থেকে আসে"
+    },
+    {
+        "cat_id": 14,
+        "subcat_id": 102,
+        "subcat_name": "এ জাতীয় কুমন্ত্রণার এমনকি কিছু সাহাবীদেরকেও জর্জরিত করেছে"
+    },
+    {
+        "cat_id": 14,
+        "subcat_id": 103,
+        "subcat_name": "কুমন্ত্রণা পরিপূর্ণভাবে প্রত্যাখ্যান করা"
+    },
+    {
+        "cat_id": 14,
+        "subcat_id": 104,
+        "subcat_name": "অন্যান্য উপায়"
+    },
+    {
+        "cat_id": 15,
+        "subcat_id": 105,
+        "subcat_name": "রুকিয়াহ শারিয়াহ (পর্বঃ ১-১০)"
+    },
+    {
+        "cat_id": 15,
+        "subcat_id": 106,
+        "subcat_name": "রুকিয়াহ"
+    },
+    {
+        "cat_id": 15,
+        "subcat_id": 107,
+        "subcat_name": "বদনজর"
+    },
+    {
+        "cat_id": 15,
+        "subcat_id": 108,
+        "subcat_name": "তাবিজ নষ্ট করার পদ্ধতি জেনে নিন"
+    },
+    {
+        "cat_id": 15,
+        "subcat_id": 109,
+        "subcat_name": "জিন, যাদু ও বদনজরের জন্য রুকিয়াহ"
+    },
+    {
+        "cat_id": 15,
+        "subcat_id": 110,
+        "subcat_name": "বদনজর"
+    },
+    {
+        "cat_id": 15,
+        "subcat_id": 111,
+        "subcat_name": "সকল প্রকার রোগ ব্যাধির জন্য প্রাথমিক রুকইয়াহ"
+    },
+    {
+        "cat_id": 15,
+        "subcat_id": 112,
+        "subcat_name": "জ্বিন"
+    },
+    {
+        "cat_id": 15,
+        "subcat_id": 113,
+        "subcat_name": "রুকইয়াহ চিকিৎসা"
+    },
+    {
+        "cat_id": 15,
+        "subcat_id": 114,
+        "subcat_name": "যাদু"
+    },
+    {
+        "cat_id": 15,
+        "subcat_id": 115,
+        "subcat_name": "দাম্পত্য জীবনের সমস্যাবলী"
+    },
+    {
+        "cat_id": 15,
+        "subcat_id": 116,
+        "subcat_name": "লাভার জিন বা আশিক জিন!"
+    },
+    {
+        "cat_id": 15,
+        "subcat_id": 117,
+        "subcat_name": "ওয়াসওয়াসা"
+    }
+]
