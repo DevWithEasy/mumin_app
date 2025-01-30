@@ -16,6 +16,10 @@ class SalahTopicScreen extends StatefulWidget {
 
 class _SalahTopicScreenState extends State<SalahTopicScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
