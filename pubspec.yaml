@@ -123,15 +123,18 @@ flutter:
     - assets/images/ruqyah/video.png
     - assets/images/salah/adhan.png
     - assets/images/salah/dua.png
+    - assets/images/salah/info.png
     - assets/images/salah/niyat.png
     - assets/images/salah/rakah_break.png
     - assets/images/salah/ruku.png
     - assets/images/salah/sajdah.png
     - assets/images/salah/salam.png
+    - assets/images/salah/salah.png
     - assets/images/salah/sana.png
     - assets/images/salah/shower.png
     - assets/images/salah/takber.png
     - assets/images/salah/tasahadud.png
+    - assets/images/salah/tayammum.png
     - assets/images/salah/wudu.png
     - assets/data/asmaul_husna.json
     - assets/data/kalimas.json
@@ -142,7 +145,9 @@ flutter:
     - assets/data/istegfar.json
     - assets/data/dua/dua_category.json
     - assets/data/dua/dua_collection.json
-    - assets/data/salah/salah_category.json
+    - assets/data/salah/salatur_category.json
+    - assets/data/salah/salatur_topics.json
+    - assets/data/salah/salah.json
     - assets/data/salah/salah_topics.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

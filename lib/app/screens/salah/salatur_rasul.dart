@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mumin/app/models/SalahCategory.dart';
-import 'package:mumin/app/screens/salah/salah_topic.dart';
+import 'package:mumin/app/models/SalaturCategory.dart';
+import 'package:mumin/app/screens/salah/salatur_topic.dart';
 import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 
 class SalaturRasulScreen extends StatefulWidget {
@@ -14,13 +14,13 @@ class SalaturRasulScreen extends StatefulWidget {
 }
 
 class _SalaturRasulScreenState extends State<SalaturRasulScreen> {
-  List<SalahCategory> _categories = [];
+  List<SalaturCategory> _categories = [];
 
   Future<void> _loadData() async {
     try {
       // Load the JSON file from assets
       final String jsonString =
-          await rootBundle.loadString('assets/data/salah/salah_category.json');
+          await rootBundle.loadString('assets/data/salah/salatur_category.json');
 
       // Decode the JSON string as a List
       final List<dynamic> jsonData = jsonDecode(jsonString);
@@ -28,7 +28,7 @@ class _SalaturRasulScreenState extends State<SalaturRasulScreen> {
       // Update the state with the parsed data
       setState(() {
         _categories =
-            jsonData.map((json) => SalahCategory.fromJson(json)).toList();
+            jsonData.map((json) => SalaturCategory.fromJson(json)).toList();
       });
     } catch (e) {
       // Handle any errors during loading or parsing
@@ -99,7 +99,7 @@ class _SalaturRasulScreenState extends State<SalaturRasulScreen> {
                               onTap: () {
                                 Navigator.push(
                                   context, 
-                                  MaterialPageRoute(builder: (contex)=>SalahTopicScreen(
+                                  MaterialPageRoute(builder: (contex)=>SalaturTopicScreen(
                                     catName: category.heading,
                                     catId: category.id,
                                     currentIndex: topicIndex,

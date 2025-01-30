@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mumin/app/models/SalahCategory.dart';
-import 'package:mumin/app/screens/salah/salah_topic.dart';
-import 'package:mumin/app/utils/convert_to_bangla_number.dart';
+import 'package:mumin/app/screens/salah/salah_category.dart';
 
 class SalahScreen extends StatefulWidget {
   const SalahScreen({super.key});
@@ -19,7 +18,7 @@ class _SalahScreenState extends State<SalahScreen> {
     try {
       // Load the JSON file from assets
       final String jsonString =
-          await rootBundle.loadString('assets/data/salah/salah_category.json');
+          await rootBundle.loadString('assets/data/salah/salah.json');
 
       // Decode the JSON string as a List
       final List<dynamic> jsonData = jsonDecode(jsonString);
@@ -60,56 +59,36 @@ class _SalahScreenState extends State<SalahScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   final category = _categories[index];
-
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        category.heading,
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: ListTile(
+                      title: Text(
+                        category.title,
                         style: const TextStyle(
-                          fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
                       ),
-                      const Divider(),
-                      // Use ListView.builder to render topics for better performance
-                      ListView.builder(
-                        itemCount: category.topics.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, topicIndex) {
-                          final topic = category.topics[topicIndex];
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: ListTile(
-                              title: Text(topic.title),
-                              leading: CircleAvatar(
-                                backgroundColor: Colors.grey.shade200,
-                                child: Text(
-                                  convertToBanglaNumbers(
-                                      (topicIndex + 1).toString()),
-                                ),
-                              ),
-                              shape: ContinuousRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  side: BorderSide(
-                                      color: Colors.grey.shade300, width: 1)),
-                              onTap: () {
-                                Navigator.push(
-                                  context, 
-                                  MaterialPageRoute(builder: (contex)=>SalahTopicScreen(
-                                    catName: category.heading,
-                                    catId: category.id,
-                                    currentIndex: topicIndex,
-                                  )));
-                              },
-                            ),
-                          );
-                        },
+                      leading: Image.asset(
+                        category.image,
+                        width: 40, // Fixed width
+                        height: 40, // Fixed height
+                        fit: BoxFit
+                            .cover, // Ensures the image fills the space properly
                       ),
-                      const SizedBox(height: 16), // Space between categories
-                    ],
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                SalahCategoryScreen(category: category),
+                          ),
+                        );
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: const BorderSide(color: Colors.grey),
+                      ),
+                    ),
                   );
                 },
               ),

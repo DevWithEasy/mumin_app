@@ -1,59 +1,57 @@
-class SalahCategory {
+class SalaturCategory {
   final int id;
-  final String title;
-  final String image;
+  final String heading;
   final List<Topic> topics;
 
-  SalahCategory({
+  SalaturCategory({
     required this.id,
-    required this.title,
-    required this.image,
+    required this.heading,
     required this.topics,
   });
 
-  factory SalahCategory.fromJson(Map<String, dynamic> json) {
-    return SalahCategory(
+  // Factory method to create a SalaturCategory object from JSON
+  factory SalaturCategory.fromJson(Map<String, dynamic> json) {
+    return SalaturCategory(
       id: json['id'],
-      title: json['title'],
-      image: json['image'],
-      topics: (json['topics'] as List).map((topic) => Topic.fromJson(topic)).toList(),
+      heading: json['heading'],
+      topics: (json['topics'] as List)
+          .map((topic) => Topic.fromJson(topic))
+          .toList(),
     );
   }
 
+  // Method to convert a SalaturCategory object to JSON
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'title': title,
-      'image': image,
+      'heading': heading,
       'topics': topics.map((topic) => topic.toJson()).toList(),
     };
   }
 }
 
 class Topic {
-  final int id;
+  final String id;
   final String title;
-  final String image;
 
   Topic({
     required this.id,
     required this.title,
-    required this.image,
   });
 
+  // Factory method to create a Topic object from JSON
   factory Topic.fromJson(Map<String, dynamic> json) {
     return Topic(
       id: json['id'],
       title: json['title'],
-      image: json['image'],
     );
   }
 
+  // Method to convert a Topic object to JSON
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'title': title,
-      'image': image,
     };
   }
 }

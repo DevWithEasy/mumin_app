@@ -1,104 +1,49 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:mumin/app/models/SalahTopic.dart';
 
 class SalahTopicScreen extends StatefulWidget {
-  final String catName;
   final int catId;
-  final int currentIndex;
+  final String catName;
+  final String subCatName;
   const SalahTopicScreen(
       {super.key,
       required this.catId,
-      required this.currentIndex,
-      required this.catName});
+      required this.catName,
+      required this.subCatName});
 
   @override
   State<SalahTopicScreen> createState() => _SalahTopicScreenState();
 }
 
 class _SalahTopicScreenState extends State<SalahTopicScreen> {
-  List<SalahTopic> _salahTopics = [];
-  late PageController _pageController;
-  late int _currentIndex;
-
-Future<void> _loadData() async {
-  try {
-    final String jsonString =
-        await rootBundle.loadString('assets/data/salah/salah_topics.json');
-    final List<dynamic> jsondata = jsonDecode(jsonString);
-
-    setState(() {
-      _salahTopics = jsondata
-          .where((element) => element['category'] == widget.catId)
-          .toList()
-          .map((json) => SalahTopic.fromJson(json))
-          .toList();
-
-      // Initialize PageController after _salahTopics is populated
-      _pageController = PageController(initialPage: _currentIndex);
-    });
-  } catch (e) {
-    print('Error loading or parsing JSON: $e');
-  }
-}
-
-
-  @override
-  void initState() {
-    super.initState();
-    _loadData();
-    _currentIndex = widget.currentIndex;
-    _pageController = PageController(initialPage: _currentIndex);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    print(widget.currentIndex);
-    print(_currentIndex);
     return Scaffold(
       backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text(widget.catName),
-          elevation: 1,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {},
-            ),
-          ],
+      appBar: AppBar(
+        title: Text(widget.catName),
+        elevation: 1,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            children: [
+              // ListView.builder(
+              //   itemCount: widget.category.topics.length,
+              //   shrinkWrap: true,
+              //   physics: const NeverScrollableScrollPhysics(),
+              //   itemBuilder: (context, index) {
+              //     final topic = widget.category.topics[index];
+              //     return ListTile(
+              //       title: Text(topic.title),
+
+              //     );
+              //   },
+              // ),
+            ],
+          ),
         ),
-        body: _salahTopics.isEmpty? 
-        Center(child: CircularProgressIndicator()) :
-        PageView.builder(
-          controller: _pageController,
-          itemCount: _salahTopics.length,
-          itemBuilder: (context,int index){
-            final SalahTopic topic = _salahTopics[index];
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  children: [
-                    Html(data: topic.description),
-                    
-                    Container(
-                      color : Colors.grey.shade200,
-                      child: Html(data: topic.reference),
-                    )
-                  ],
-                ),
-              )
-            );
-          }
-        ));
+      ),
+    );
   }
 }
