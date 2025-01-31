@@ -10,6 +10,7 @@ import 'package:mumin/app/screens/mumin/ramadan.dart';
 import 'package:mumin/app/screens/mumin/salah.dart';
 import 'package:mumin/app/screens/mumin/tasbih.dart';
 import 'package:mumin/app/screens/mumin/zakat.dart';
+import 'package:mumin/app/screens/mumin/mahram.dart';
 
 class MuminScreen extends StatelessWidget {
   MuminScreen({super.key});
@@ -25,6 +26,7 @@ class MuminScreen extends StatelessWidget {
     {'title': 'তাসবিহ', 'image': 'assets/images/mumin/tasbih.png', 'screen': TasbihScreen()},
     {'title': 'ইস্তিগফার', 'image': 'assets/images/mumin/istighfer.png', 'screen': IstighfarScreen()},
     {'title': 'যাকাত', 'image': 'assets/images/mumin/zakat.png', 'screen': ZakatScreen()},
+    {'title': 'মাহরাম', 'image': 'assets/images/mumin/mahram.png', 'screen': MahramScreen()},
   ];
 
   @override

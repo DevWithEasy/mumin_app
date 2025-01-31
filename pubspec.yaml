@@ -89,6 +89,9 @@ flutter:
     - assets/images/mumin/salah.png
     - assets/images/mumin/tasbih.png
     - assets/images/mumin/zakat.png
+    - assets/images/mumin/mahram.png
+    - assets/images/mahram/male.png
+    - assets/images/mahram/female.png
     - assets/images/dua/alhamdulillah.png
     - assets/images/dua/cleaning.png
     - assets/images/dua/dressing.png
@@ -149,6 +152,7 @@ flutter:
     - assets/data/salah/salatur_topics.json
     - assets/data/salah/salah.json
     - assets/data/salah/salah_topics.json
+    - assets/data/mahram.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
