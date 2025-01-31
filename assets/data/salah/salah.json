@@ -51,17 +51,17 @@
             {
                 "id": 1,
                 "title": "তায়াম্মুম",
-                "image": "assets/images/salah/wudu.png"
+                "image": "assets/images/salah/tayammum.png"
             },
             {
                 "id": 2,
                 "title": "তায়াম্মুমের বিবরণ",
-                "image": "assets/images/salah/wudu.png"
+                "image": "assets/images/salah/tayammum.png"
             },
             {
                 "id": 3,
                 "title": "তায়াম্মুমের কারণ",
-                "image": "assets/images/salah/wudu.png"
+                "image": "assets/images/salah/tayammum.png"
             }
         ]
     },
@@ -81,32 +81,32 @@
                 "image": "assets/images/salah/adhan.png"
             },
             {
-                "id": 4,
+                "id": 3,
                 "title": "আযানের পরে দোয়া",
                 "image": "assets/images/salah/adhan.png"
             },
             {
-                "id": 5,
+                "id": 4,
                 "title": "আযানের জওয়াব",
                 "image": "assets/images/salah/adhan.png"
             },
             {
-                "id": 6,
+                "id": 5,
                 "title": "এক্বামত",
                 "image": "assets/images/salah/adhan.png"
             },
             {
-                "id": 7,
+                "id": 6,
                 "title": "আযানের পরে দোয়া",
                 "image": "assets/images/salah/adhan.png"
             },
             {
-                "id": 8,
+                "id": 7,
                 "title": "আযানের অন্যান্য পরিত্যাজ্য বিষয়",
                 "image": "assets/images/salah/adhan.png"
             },
             {
-                "id": 9,
+                "id": 8,
                 "title": "আযানের অন্যান্য মাসায়েল",
                 "image": "assets/images/salah/adhan.png"
             }
