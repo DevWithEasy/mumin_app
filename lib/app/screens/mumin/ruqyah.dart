@@ -42,31 +42,45 @@ class _RuqyahScreenState extends State<RuqyahScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text('Ruqyah Category'),
+          elevation: 1,
         ),
         body: SingleChildScrollView(
           child: _categories.isEmpty
               ? Center(child: CircularProgressIndicator())
-              : ListView.builder(
-                  itemCount: _categories.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(_categories[index].categoryName),
-                      leading: Image.asset(
-                        _categories[index].catIcon,
-                        width: 50,
-                        height: 50,
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RuqyahsubcategoryScreen(
-                                    id: _categories[index].catId)));
-                      },
-                    );
-                  }),
+              : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                    itemCount: _categories.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: ListTile(
+                          title: Text(_categories[index].categoryName),
+                          leading: Image.asset(
+                            _categories[index].catIcon,
+                            width: 40,
+                            height: 40,
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RuqyahsubcategoryScreen(
+                                        id: _categories[index].catId)));
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              side: BorderSide(color: Colors.grey)
+                          )
+                        ),
+                      );
+                    }),
+              ),
         ));
   }
 }

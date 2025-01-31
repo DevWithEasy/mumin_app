@@ -12,8 +12,8 @@ class RuqyahDetailsScreen extends StatefulWidget {
 }
 
 class _RuqyahDetailsScreenState extends State<RuqyahDetailsScreen> {
-    List<RuqyahDetails> _categories = [];
-  List<RuqyahDetails> _filteredCategories = [];
+  List<RuqyahDetails> _ruqiahas = [];
+  RuqyahDetails? _ruqiah;
 
   Future<void> _loadData() async {
     try {
@@ -22,13 +22,11 @@ class _RuqyahDetailsScreenState extends State<RuqyahDetailsScreen> {
       final List<dynamic> jsonData = jsonDecode(jsonString);
 
       setState(() {
-        _categories =
+        _ruqiahas =
             jsonData.map((json) => RuqyahDetails.fromJson(json)).toList();
         
-        // Filter categories based on the widget's ID
-        _filteredCategories = _categories
-            .where((category) => category.subcatId== widget.id)
-            .toList();
+        // Find single item based on the widget's ID
+        _ruqiah = _ruqiahas.firstWhere((ruqiah) => ruqiah.subcatId == widget.id);
       });
     } catch (e) {
       print('Error loading or parsing JSON: $e');
@@ -40,15 +38,28 @@ class _RuqyahDetailsScreenState extends State<RuqyahDetailsScreen> {
     super.initState();
     _loadData();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Ruqyah Details'),
       ),
-      body: Center(
-        child: Text('Ruqyah Details Screen'),
-      ),
+      body: _ruqiah == null
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _ruqiah!.ruqyaDetails
+                    ),
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }

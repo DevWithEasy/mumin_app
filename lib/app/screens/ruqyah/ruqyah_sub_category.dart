@@ -47,33 +47,45 @@ class _RuqyahsubcategoryScreenState extends State<RuqyahsubcategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Ruqyah SubCategory'),
+        elevation: 1,
       ),
       body: _filteredCategories.isEmpty
           ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: _filteredCategories.length,
-              itemBuilder: (context, index) {
-                final category = _filteredCategories[index];
-                return ListTile(
-                  title: Text(category.subcatName),
-                  leading: CircleAvatar(
-                    child: Text(convertToBanglaNumbers((index+1).toString())),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RuqyahDetailsScreen(
-                          id: category.subcatId,
-                        ),
+          : Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView.builder(
+                itemCount: _filteredCategories.length,
+                itemBuilder: (context, index) {
+                  final category = _filteredCategories[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: ListTile(
+                      title: Text(category.subcatName),
+                      leading: CircleAvatar(
+                        child: Text(convertToBanglaNumbers((index+1).toString())),
                       ),
-                    );
-                  },
-                );
-              },
-            ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RuqyahDetailsScreen(
+                              id: category.subcatId,
+                            ),
+                          ),
+                        );
+                      },
+                      shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                side: BorderSide(color: Colors.grey)
+                            )
+                    ),
+                  );
+                },
+              ),
+          ),
     );
   }
 }
