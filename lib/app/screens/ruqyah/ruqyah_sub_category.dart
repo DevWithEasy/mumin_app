@@ -7,7 +7,8 @@ import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 
 class RuqyahsubcategoryScreen extends StatefulWidget {
   final int id;
-  const RuqyahsubcategoryScreen({super.key, required this.id});
+  final String title;
+  const RuqyahsubcategoryScreen({super.key, required this.id, required this.title});
 
   @override
   State<RuqyahsubcategoryScreen> createState() =>
@@ -49,7 +50,7 @@ class _RuqyahsubcategoryScreenState extends State<RuqyahsubcategoryScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Ruqyah SubCategory'),
+        title: Text(widget.title),
         elevation: 1,
       ),
       body: _filteredCategories.isEmpty
@@ -73,6 +74,8 @@ class _RuqyahsubcategoryScreenState extends State<RuqyahsubcategoryScreen> {
                           MaterialPageRoute(
                             builder: (context) => RuqyahDetailsScreen(
                               id: category.subcatId,
+                              catTitle : widget.title,
+                              subCatTitle: category.subcatName,
                             ),
                           ),
                         );

@@ -44,7 +44,7 @@ class _RuqyahScreenState extends State<RuqyahScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Ruqyah Category'),
+          title: Text('রুকিয়াহ'),
           elevation: 1,
         ),
         body: SingleChildScrollView(
@@ -63,15 +63,17 @@ class _RuqyahScreenState extends State<RuqyahScreen> {
                           title: Text(_categories[index].categoryName),
                           leading: Image.asset(
                             _categories[index].catIcon,
-                            width: 40,
-                            height: 40,
+                            width: 25,
+                            height: 25,
                           ),
                           onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => RuqyahsubcategoryScreen(
-                                        id: _categories[index].catId)));
+                                        id: _categories[index].catId,
+                                        title: _categories[index].categoryName,
+                                    )));
                           },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
