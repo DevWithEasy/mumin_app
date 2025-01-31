@@ -39,9 +39,8 @@ class _MainScreenState extends State<MainScreen> {
           'মুমিন', 
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
         ),
-        elevation: 0.1,
+        elevation: 1,
         backgroundColor: Colors.white,
-        shadowColor: Colors.grey,
         actions: [HomeAppBarActions()],
       ),
       body: _screens[_currentIndex],

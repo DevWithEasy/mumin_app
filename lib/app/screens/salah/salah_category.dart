@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mumin/app/models/salah/SalahCategory.dart';
+import 'package:mumin/app/screens/salah/salah_topic.dart';
 import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 
 class SalahCategoryScreen extends StatefulWidget {
@@ -34,23 +35,34 @@ class _SalahTopicScreenState extends State<SalahCategoryScreen> {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: ListTile(
                       title: Text(topic.title),
-                      leading: CircleAvatar(
-                        child: Text(
-                          convertToBanglaNumbers(topic.id.toString()),
-                        ),
-                      ),
+                      leading: widget.category.id == 7
+                          ? Image.asset(
+                              topic.image,
+                              height: 40,
+                              width: 40,
+                              fit: BoxFit.fitWidth,
+                            )
+                          : CircleAvatar(
+                              child: Text(
+                                convertToBanglaNumbers(topic.id.toString()),
+                              ),
+                            ),
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => SalahCategoryScreen(category: topic),
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SalahTopicScreen(
+                              catId: widget.category.id,
+                              catName: widget.category.title,
+                              currentIndex: index,
+                            ),
+                          ),
+                        );
                       },
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: const BorderSide(color: Colors.grey),
-                        ),
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(color: Colors.grey.shade300),
+                      ),
                     ),
                   );
                 },

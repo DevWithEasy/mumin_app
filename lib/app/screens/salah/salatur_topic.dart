@@ -85,8 +85,10 @@ Future<void> _loadData() async {
             final SalaturTopic topic = _salahTopics[index];
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(4),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Html(data: topic.description),
                     

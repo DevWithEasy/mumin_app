@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mumin/app/components/app_add/salatur_rasul.dart';
 import 'package:mumin/app/models/salah/SalahCategory.dart';
 import 'package:mumin/app/screens/salah/salah_category.dart';
 
@@ -53,6 +54,8 @@ class _SalahScreenState extends State<SalahScreen> {
           padding: const EdgeInsets.all(12),
           child: Column(
             children: [
+              AppSalaturRasul(),
+              SizedBox(height: 8),
               ListView.builder(
                 itemCount: _categories.length,
                 shrinkWrap: true,
@@ -86,7 +89,7 @@ class _SalahScreenState extends State<SalahScreen> {
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
-                        side: const BorderSide(color: Colors.grey),
+                        side: BorderSide(color: Colors.grey.shade300),
                       ),
                     ),
                   );
