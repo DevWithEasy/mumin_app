@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mumin/app/components/hadith/loading_hadith_widget.dart';
-import 'package:mumin/app/models/DuaCategory.dart';
+import 'package:mumin/app/models/dua/DuaCategory.dart';
 import 'package:mumin/app/screens/dua/dua_list.dart';
 
 class DuaScreen extends StatefulWidget {

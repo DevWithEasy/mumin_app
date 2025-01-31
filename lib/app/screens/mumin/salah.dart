@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mumin/app/models/SalahCategory.dart';
+import 'package:mumin/app/models/salah/SalahCategory.dart';
 import 'package:mumin/app/screens/salah/salah_category.dart';
 
 class SalahScreen extends StatefulWidget {

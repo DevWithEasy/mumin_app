@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mumin/app/models/Sura.dart';
+import 'package:mumin/app/models/quran/Sura.dart';
 import 'package:mumin/app/screens/quran/sura.dart';
 import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 

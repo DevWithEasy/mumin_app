@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mumin/app/components/hadith/loading_hadith_widget.dart';
-import 'package:mumin/app/models/Dua.dart';
+import 'package:mumin/app/models/dua/Dua.dart';
 import 'package:mumin/app/screens/dua/dua_details.dart';
 import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 

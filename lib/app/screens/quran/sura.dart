@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mumin/app/components/hadith/loading_hadith_widget.dart';
 import 'package:mumin/app/components/quran/quran_setting_bottomsheet_widget.dart';
-import 'package:mumin/app/models/SuraDetails.dart';
+import 'package:mumin/app/models/quran/SuraDetails.dart';
 import 'package:mumin/app/providers/ReadProvider.dart';
 import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 import 'package:provider/provider.dart';

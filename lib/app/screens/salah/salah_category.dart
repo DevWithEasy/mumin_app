@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mumin/app/models/SalahCategory.dart';
+import 'package:mumin/app/models/salah/SalahCategory.dart';
 import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 
 class SalahCategoryScreen extends StatefulWidget {

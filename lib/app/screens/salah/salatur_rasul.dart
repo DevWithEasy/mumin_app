@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mumin/app/models/SalaturCategory.dart';
+import 'package:mumin/app/models/salah/SalaturCategory.dart';
 import 'package:mumin/app/screens/salah/salatur_topic.dart';
 import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mumin/app/models/Dua.dart';
+import 'package:mumin/app/models/dua/Dua.dart';
 
 class DuaDetailsScreen extends StatefulWidget {
   final List<Dua> duaList;

@@ -153,6 +153,11 @@ flutter:
     - assets/data/salah/salah.json
     - assets/data/salah/salah_topics.json
     - assets/data/mahram.json
+    - assets/data/ruqyah/category.json
+    - assets/data/ruqyah/sub_category.json
+    - assets/data/ruqyah/ruqyah_details.json
+    - assets/data/ruqyah/instant_ruqyah.json
+    - assets/data/ruqyah/video_cat.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
