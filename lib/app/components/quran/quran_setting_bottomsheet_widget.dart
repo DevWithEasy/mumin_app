@@ -11,7 +11,7 @@ class QuranSettingBottomsheet extends StatelessWidget {
     final readProvider = Provider.of<Readprovider>(context);
     return Container(
       padding: EdgeInsets.all(16),
-      height: 400,
+      height: 600,
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,6 +21,34 @@ class QuranSettingBottomsheet extends StatelessWidget {
             child: Text(
               'সেটিংস',
               style: TextStyle(fontSize: 18),
+            ),
+          ),
+          SizedBox(height: 12),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: Colors.amber.shade50,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Column(
+              children : [
+                Text("ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ",
+                  style: TextStyle(
+                    fontSize: readProvider.arabicFont,
+                  ),
+                ),
+                Text("[All] praise is [due] to Allah, Lord of the worlds",
+                  style: TextStyle(
+                    fontSize: readProvider.englishFont,
+                  ),
+                ),
+                Text("সমস্ত প্রশংসা আল্লাহ্‌র প্রাপ্য, সমুদয় সৃষ্ট-জগতের রব্ব।",
+                  style: TextStyle(
+                    fontSize: readProvider.banglaFont,
+                  ),
+                ),
+              ]
             ),
           ),
           SizedBox(height: 12),

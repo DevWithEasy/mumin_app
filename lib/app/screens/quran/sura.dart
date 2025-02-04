@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mumin/app/components/hadith/loading_hadith_widget.dart';
-import 'package:mumin/app/components/quran/quran_setting_bottomsheet_widget.dart';
 import 'package:mumin/app/models/quran/SuraDetails.dart';
 import 'package:mumin/app/providers/ReadProvider.dart';
+import 'package:mumin/app/screens/quran/quran_settings.dart';
 import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 import 'package:provider/provider.dart';
 
@@ -62,10 +62,10 @@ class _SuraScreenState extends State<SuraScreen> {
             IconButton(
               icon: Icon(Icons.settings),
               onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) => QuranSettingBottomsheet(),
-                );
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => QuranSettingsScrren()));
               },
             )
           ],
@@ -91,8 +91,8 @@ class _SuraScreenState extends State<SuraScreen> {
                                   flex: 2,
                                   child: Image.asset(
                                     selectedSura?.revelationType == 'Meccan'
-                                        ? 'assets/images/makka.png'
-                                        : 'assets/images/madina.png',
+                                        ? 'assets/images/quran/makka.png'
+                                        : 'assets/images/quran/madina.png',
                                     height: 50,
                                     width: 50,
                                   ),
@@ -140,7 +140,7 @@ class _SuraScreenState extends State<SuraScreen> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 40),
                               child: Image.asset(
-                                'assets/images/bismillah.png',
+                                'assets/images/quran/bismillah.png',
                               ),
                             )
                           ],
@@ -180,20 +180,31 @@ class _SuraScreenState extends State<SuraScreen> {
                                           showDialog(
                                               context: context,
                                               builder: (context) => AlertDialog(
-                                                backgroundColor: Colors.white,
+                                                    backgroundColor:
+                                                        Colors.white,
                                                     content: Container(
-                                                      width: MediaQuery.of(context).size.width *0.8,
-                                                      height: MediaQuery.of(context).size.height *0.3,
-                                                      padding: EdgeInsets.all(8),
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.8,
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.3,
+                                                      padding:
+                                                          EdgeInsets.all(8),
                                                       child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
                                                           Text(
-                                                      '${selectedSura?.englishName} ${convertToBanglaNumbers(selectedSura!.number.toString())}:${convertToBanglaNumbers((index + 1).toString())}',
-                                                      style: TextStyle(
-                                                        fontSize: 16
-                                                      ),
-                                                    ),
+                                                            '${selectedSura?.englishName} ${convertToBanglaNumbers(selectedSura!.number.toString())}:${convertToBanglaNumbers((index + 1).toString())}',
+                                                            style: TextStyle(
+                                                                fontSize: 16),
+                                                          ),
                                                           Row(
                                                             children: [],
                                                           )
@@ -224,19 +235,19 @@ class _SuraScreenState extends State<SuraScreen> {
                                 Text(
                                   ayah.english,
                                   style: TextStyle(
-                                        fontSize: readProvider.englishFont,
-                                        color: Colors.black,
-                                      ),
+                                    fontSize: readProvider.englishFont,
+                                    color: Colors.black,
+                                  ),
                                 ),
                                 SizedBox(height: 5),
                                 Text(
                                   readProvider.bnTranlator == 'jahirul_bn'
                                       ? ayah.jahirul_bn
                                       : ayah.muhiuddin_bn,
-                                      style: TextStyle(
-                                        fontSize: readProvider.banglaFont,
-                                        color: Colors.black,
-                                      ),
+                                  style: TextStyle(
+                                    fontSize: readProvider.banglaFont,
+                                    color: Colors.black,
+                                  ),
                                 )
                               ],
                             ),
