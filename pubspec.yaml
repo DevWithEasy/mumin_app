@@ -74,9 +74,6 @@ flutter:
     - assets/images/icon.png
     - assets/images/mumin.png
     - assets/images/suntime.png
-    - assets/images/madina.png
-    - assets/images/makka.png
-    - assets/images/bismillah.png
     - assets/images/playstore.png
     - assets/images/mumin/allah.png
     - assets/images/mumin/dua.png
@@ -91,6 +88,9 @@ flutter:
     - assets/images/mumin/tasbih.png
     - assets/images/mumin/zakat.png
     - assets/images/mumin/mahram.png
+    - assets/images/quran/madina.png
+    - assets/images/quran/makka.png
+    - assets/images/quran/bismillah.png
     - assets/images/mahram/male.png
     - assets/images/mahram/female.png
     - assets/images/dua/alhamdulillah.png
