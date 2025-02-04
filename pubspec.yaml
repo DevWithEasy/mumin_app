@@ -140,6 +140,7 @@ flutter:
     - assets/images/salah/tasahadud.png
     - assets/images/salah/tayammum.png
     - assets/images/salah/wudu.png
+    - assets/data/countries.json
     - assets/data/asmaul_husna.json
     - assets/data/kalimas.json
     - assets/data/hadith.json

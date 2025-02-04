@@ -1,87 +1,50 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedData {
-  // Singleton instance
-  static final SharedData _instance = SharedData._internal();
-  factory SharedData() => _instance;
-  SharedData._internal();
+  static SharedPreferences? _preferences;
 
-  SharedPreferences? _preferences;
-
-  // Initialize SharedPreferences
-  Future<void> init() async {
+  /// Initialize SharedPreferences (Call this in `main.dart` before using)
+  static Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
   }
 
-  // Save a string value
-  Future<bool> saveString(String key, String value) async {
-    if (_preferences == null) await init();
-    return _preferences!.setString(key, value);
+  /// Save a string value
+  static Future<void> setString(String key, String value) async {
+    await _preferences?.setString(key, value);
   }
 
-  // Retrieve a string value
-  String? getString(String key) {
-    if (_preferences == null) return null;
-    return _preferences!.getString(key);
+  /// Get a string value
+  static String? getString(String key) {
+    return _preferences?.getString(key);
   }
 
-  // Save a boolean value
-  Future<bool> saveBool(String key, bool value) async {
-    if (_preferences == null) await init();
-    return _preferences!.setBool(key, value);
+  /// Save an integer value
+  static Future<void> setInt(String key, int value) async {
+    await _preferences?.setInt(key, value);
   }
 
-  // Retrieve a boolean value
-  bool? getBool(String key) {
-    if (_preferences == null) return null;
-    return _preferences!.getBool(key);
+  /// Get an integer value
+  static int? getInt(String key) {
+    return _preferences?.getInt(key);
   }
 
-  // Save an integer value
-  Future<bool> saveInt(String key, int value) async {
-    if (_preferences == null) await init();
-    return _preferences!.setInt(key, value);
+  /// Save a boolean value
+  static Future<void> setBool(String key, bool value) async {
+    await _preferences?.setBool(key, value);
   }
 
-  // Retrieve an integer value
-  int? getInt(String key) {
-    if (_preferences == null) return null;
-    return _preferences!.getInt(key);
+  /// Get a boolean value
+  static bool? getBool(String key) {
+    return _preferences?.getBool(key);
   }
 
-  // Save a double value
-  Future<bool> saveDouble(String key, double value) async {
-    if (_preferences == null) await init();
-    return _preferences!.setDouble(key, value);
+  /// Remove a specific key
+  static Future<void> removeKey(String key) async {
+    await _preferences?.remove(key);
   }
 
-  // Retrieve a double value
-  double? getDouble(String key) {
-    if (_preferences == null) return null;
-    return _preferences!.getDouble(key);
-  }
-
-  // Save a list of strings
-  Future<bool> saveStringList(String key, List<String> value) async {
-    if (_preferences == null) await init();
-    return _preferences!.setStringList(key, value);
-  }
-
-  // Retrieve a list of strings
-  List<String>? getStringList(String key) {
-    if (_preferences == null) return null;
-    return _preferences!.getStringList(key);
-  }
-
-  // Remove a specific key
-  Future<bool> remove(String key) async {
-    if (_preferences == null) await init();
-    return _preferences!.remove(key);
-  }
-
-  // Clear all stored data
-  Future<bool> clear() async {
-    if (_preferences == null) await init();
-    return _preferences!.clear();
+  /// Clear all stored data
+  static Future<void> clearAll() async {
+    await _preferences?.clear();
   }
 }
