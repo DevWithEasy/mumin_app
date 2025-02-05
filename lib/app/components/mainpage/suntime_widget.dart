@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mumin/app/services/date_service.dart';
 
 class SunTime extends StatelessWidget {
   const SunTime({super.key});
@@ -26,16 +27,16 @@ class SunTime extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center, // Center the content horizontally
               children: [
                 Text(
-                  '১৮ রজব',
-                  style: TextStyle(fontSize: 16,color: Colors.white),
+                  DateService.getTodayBengaliDayName(),
+                  style: TextStyle(color: Colors.white),
                 ),
                 Text(
-                  'শনিবার - ২১ জানুয়ারি',
-                  style: TextStyle(fontSize: 16,color: const Color.fromARGB(255, 240, 237, 237)),
+                  DateService.getCurrentBengaliDate(),
+                  style: TextStyle(color: const Color.fromARGB(255, 240, 237, 237)),
                 ),
                 Text(
-                  '৮ মাঘ',
-                  style: TextStyle(fontSize: 16,color: const Color.fromARGB(255, 240, 237, 237)),
+                  DateService.getTodayHijriDate(),
+                  style: TextStyle(color: const Color.fromARGB(255, 240, 237, 237)),
                 ),
               ],
             ),
@@ -52,12 +53,12 @@ class SunTime extends StatelessWidget {
                   children: [
                     Text(
                       '০৭ঃ০০',
-                      style: TextStyle(fontSize: 16,color: Colors.white),
+                      style: TextStyle(color: Colors.white),
                     ),
                     SizedBox(height: 4),
                     Text(
                       'সুর্যোদয়',
-                      style: TextStyle(fontSize: 16,color: const Color.fromARGB(255, 240, 237, 237)),
+                      style: TextStyle(color: const Color.fromARGB(255, 240, 237, 237)),
                     ),
                   ],
                 ),
@@ -67,12 +68,12 @@ class SunTime extends StatelessWidget {
                   children: [
                     Text(
                       '০৭ঃ০০',
-                      style: TextStyle(fontSize: 16,color: Colors.white),
+                      style: TextStyle(color: Colors.white),
                     ),
                     SizedBox(height: 4),
                     Text(
                       'সুর্যাস্ত',
-                      style: TextStyle(fontSize: 16,color: const Color.fromARGB(255, 240, 237, 237)),
+                      style: TextStyle(color: const Color.fromARGB(255, 240, 237, 237)),
                     ),
                   ],
                 ),

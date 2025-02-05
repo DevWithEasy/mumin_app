@@ -3,7 +3,6 @@ import 'package:mumin/app/components/mainpage/prayer_time_widget.dart';
 import 'package:mumin/app/components/mainpage/resticted_prayer_time_widget.dart';
 import 'package:mumin/app/components/mainpage/sahari_ifter_time_widget.dart';
 import 'package:mumin/app/components/mainpage/suntime_widget.dart';
-import 'package:mumin/app/utils/date_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,9 +14,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    print(DateService.getEnglishDateInBangla(DateTime.now()));
-    print(DateService.getBanglaDate(DateTime.now()));
-    print(DateService.getHijriDate(DateTime.now()));
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
