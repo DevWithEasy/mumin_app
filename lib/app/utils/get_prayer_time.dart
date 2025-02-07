@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 Future<void> getPrayersTime() async {
   try {
     bool? isAuto = await SharedData.getBool('isAuto');
-
     if (isAuto == true) {
       String? latitude = await SharedData.getString('latitude');
       String? longitude = await SharedData.getString('longitude');

@@ -32,7 +32,6 @@ class RestictedPrayerTime extends StatelessWidget {
                       Text(
                         'সালাতের নিষিদ্ধ সময়',
                         style: TextStyle(
-                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -58,7 +57,7 @@ class RestictedPrayerTime extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Icon(Icons.info, size: 18)),
+                          child: Icon(Icons.info, size: 16)),
                     ],
                   ),
                   SizedBox(height: 12),
@@ -68,12 +67,10 @@ class RestictedPrayerTime extends StatelessWidget {
                         children: [
                           Text(
                             'ভোরঃ',
-                            style: TextStyle(fontSize: 16),
                           ),
                           SizedBox(width: 8),
                           Text(
                             '৬ঃ৪২ - ৬ঃ৫৭',
-                            style: TextStyle(fontSize: 16),
                           ),
                         ],
                       ),
@@ -81,12 +78,10 @@ class RestictedPrayerTime extends StatelessWidget {
                         children: [
                           Text(
                             'ভোরঃ',
-                            style: TextStyle(fontSize: 16),
                           ),
                           SizedBox(width: 8),
                           Text(
                             '৬ঃ৪২ - ৬ঃ৫৭',
-                            style: TextStyle(fontSize: 16),
                           ),
                         ],
                       ),
@@ -94,12 +89,10 @@ class RestictedPrayerTime extends StatelessWidget {
                         children: [
                           Text(
                             'ভোরঃ',
-                            style: TextStyle(fontSize: 16),
                           ),
                           SizedBox(width: 8),
                           Text(
                             '৬ঃ৪২ - ৬ঃ৫৭',
-                            style: TextStyle(fontSize: 16),
                           ),
                         ],
                       ),

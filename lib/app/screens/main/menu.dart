@@ -1,20 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:mumin/app/services/prayer_service.dart';
 
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
 
   @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text("Location Example"),
+      ),
       body: Center(
         child: Column(
-          children: [
-            Text('Option 1'),
-            Text('Option 2'),
-            Text('Option 3'),
-            Text('Option 4'),
-            Text('Option 5'),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: PrayerService.getCurrentLocation,
+              child: Text("Get Location"),
+            ),
           ],
         ),
       ),

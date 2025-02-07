@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mumin/app/screens/loactionSettings.dart';
+import 'package:mumin/app/services/prayer_service.dart';
 import 'package:mumin/app/services/shared_data.dart';
 
 class HomeAppBarActions extends StatefulWidget {
@@ -16,6 +17,7 @@ class _HomeAppBarActionsState extends State<HomeAppBarActions> {
 
   Future<void> checking() async {
     try {
+      PrayerService.getCurrentLocation();
       String? country = await SharedData.getString('country');
       String? city = await SharedData.getString('city');
       if (country != null && city != null) {
@@ -38,9 +40,9 @@ class _HomeAppBarActionsState extends State<HomeAppBarActions> {
 
   @override
   Widget build(BuildContext context) {
-    print(_saveLocation);
-    print(_country);
-    print(_city);
+    // print(_saveLocation);
+    // print(_country);
+    // print(_city);
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -48,30 +50,30 @@ class _HomeAppBarActionsState extends State<HomeAppBarActions> {
           MaterialPageRoute(builder: (context) => LocationSettings()),
         );
       },
-      child: _saveLocation ?
-      Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.place, color: Colors.blueGrey),
-          SizedBox(width: 8),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
-                'Dhaka',
-                style: TextStyle(fontSize: 12, color: Colors.black),
-              ),
-              Text(
-                'Bangladesh',
-                style: TextStyle(fontSize: 10, color: Colors.grey),
-              ),
-            ],
-          ),
-          SizedBox(width: 16)
-        ],
-      ) :
-      Icon(Icons.location_searching, size: 24, color: Colors.grey),
+      child: _saveLocation
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.place, color: Colors.blueGrey),
+                SizedBox(width: 8),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _city,
+                      style: TextStyle(fontSize: 12, color: Colors.black),
+                    ),
+                    Text(
+                      _country,
+                      style: TextStyle(fontSize: 10, color: Colors.grey),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 16)
+              ],
+            )
+          : Icon(Icons.location_searching, size: 24, color: Colors.grey),
     );
   }
 }
