@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mumin/app/services/prayer_service.dart';
+import 'package:mumin/app/services/shared_data.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -21,7 +21,20 @@ class _MenuScreenState extends State<MenuScreen> {
           children: <Widget>[
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: PrayerService.getCurrentLocation,
+              onPressed: () async {
+                try{
+                  bool? isAuto = await SharedData.getBool('isAuto');
+                print(isAuto);
+                String? city = await SharedData.getString('city');
+                String? lat = await SharedData.getString('latitude');
+                String? long = await SharedData.getString('longitude');
+                print(city);
+                print(lat);
+                print(long);
+                }catch(e){
+                  print(e);
+                }
+              },
               child: Text("Get Location"),
             ),
           ],

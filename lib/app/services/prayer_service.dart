@@ -51,7 +51,8 @@ class PrayerService {
       );
 
       Placemark place = placemarks[0];
-      SharedData.setString('city', place.subAdministrativeArea.toString());
+      SharedData.setString('auto_city', place.subAdministrativeArea.toString());
+      SharedData.setString('city', 'Dhaka');
       SharedData.setString('country', place.country.toString());
     } catch (e) {
       print(e);

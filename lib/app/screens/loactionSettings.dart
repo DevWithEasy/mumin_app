@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -14,9 +13,10 @@ class LocationSettings extends StatefulWidget {
 }
 
 class _LocationSettingsState extends State<LocationSettings> {
+  bool _isAuto = false;
   List<Country> _countries = [];
   String? selectedCountry;
-  List<String>? selectedCities;
+  List<String> selectedCities = [];
   String? selectedCity;
 
   @override
@@ -25,53 +25,51 @@ class _LocationSettingsState extends State<LocationSettings> {
     _loadData();
   }
 
-  Future<void> _loadData() async {
-    try {
-      // Load the JSON file from assets
-      final String jsonString =
-          await rootBundle.loadString('assets/data/countries.json');
+Future<void> _loadData() async {
+  try {
+    final String jsonString =
+        await rootBundle.loadString('assets/data/countries.json');
+    final List<dynamic> jsonData = jsonDecode(jsonString);
+    final countries = jsonData.map((json) => Country.fromJson(json)).toList();
 
-      // Decode the JSON string as a List
-      final List<dynamic> jsonData = jsonDecode(jsonString);
+    final savedCountry = await SharedData.getString('country');
+    final savedCity = await SharedData.getString('city');
+    final isAuto = await SharedData.getBool('isAuto'); // Get saved isAuto value
 
-      final countries = jsonData.map((json) => Country.fromJson(json)).toList();
-
-      final savedCountry = await SharedData.getString('country');
-      final savedCity = await SharedData.getString('city');
+    setState(() {
+      _countries = countries;
+      _isAuto = isAuto ?? false; // Use stored value or default to false
 
       if (savedCountry != null) {
-        setState(() {
-          _countries = countries;
-          selectedCountry = savedCountry;
-          selectedCities = List<String>.from(
-              countries.firstWhere((c) => c.country == savedCountry).cities);
-        });
-      } else {
-        setState(() {
-          _countries = countries;
-        });
+        selectedCountry = savedCountry;
+        selectedCities = _countries
+            .firstWhere((c) => c.country == savedCountry,
+                orElse: () =>
+                    Country(country: '', cities: [], iso2: '', iso3: ''))
+            .cities
+            .toSet()
+            .toList(); // Ensure unique values
       }
-      if (savedCity != null) {
-        setState(() {
-          selectedCity = savedCity;
-        });
+
+      if (savedCity != null && selectedCities.contains(savedCity)) {
+        selectedCity = savedCity;
       }
-    } catch (e) {
-      // Handle any errors during loading or parsing
-      print('Error loading or parsing JSON: $e');
-    }
+    });
+  } catch (e) {
+    print('Error loading or parsing JSON: $e');
   }
+}
+
 
   Future<void> fetchPrayersTime() async {
-    if (selectedCity == null ||
-        selectedCity!.isEmpty ||
-        selectedCountry == null ||
-        selectedCountry!.isEmpty) {
+    if (selectedCity == null || selectedCountry == null) {
       showError('Please select both a city and a country.');
-      return; // Exit the function early
+      return;
     }
+
     await SharedData.setString('country', selectedCountry!);
     await SharedData.setString('city', selectedCity!);
+
     var url =
         'https://api.aladhan.com/v1/timingsByCity?city=$selectedCity&country=$selectedCountry';
     try {
@@ -79,14 +77,9 @@ class _LocationSettingsState extends State<LocationSettings> {
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
         print(data);
-        // final List<dynamic> countryData = data['data'];
-
-        // setState(() {
-        //   countries = countryData;
-        // });
       } else {
         showError(
-            'Failed to load countries. Status code: ${response.statusCode}');
+            'Failed to load prayer times. Status code: ${response.statusCode}');
       }
     } catch (error) {
       showError('An error occurred: $error');
@@ -101,104 +94,111 @@ class _LocationSettingsState extends State<LocationSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text('লোকেশন সেটিংস', style: TextStyle(fontSize: 16)),
+        elevation: 0.1,
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text('লোকেশন সেটিংস', style: TextStyle(fontSize: 16)),
-          elevation: 0.1,
-          backgroundColor: Colors.white,
-          shadowColor: Colors.blueGrey,
+        shadowColor: Colors.blueGrey,
         actions: [
           ElevatedButton(
             onPressed: fetchPrayersTime,
-            child: Text('সেইভ করুন'),
-            style: ElevatedButton.styleFrom(
-            )
+            child: const Text('সেইভ করুন'),
           ),
-          SizedBox(width: 10)
+          const SizedBox(width: 10),
         ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(12),
-          child: SingleChildScrollView(
-            child: _countries.isEmpty
-                ? Center(child: const CircularProgressIndicator())
-                : Column(children: [
-                    Text(
-                        'সালাত ও ইফতার-সাহরির সঠিক সময় হিসাব করার জন্য আপনার লোকেশন সেট করুন'),
-                    SizedBox(height: 16),
-                    DropdownButtonFormField(
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12),
+        child: SingleChildScrollView(
+          child: _countries.isEmpty
+              ? const Center(child: CircularProgressIndicator())
+              : Column(
+                  children: [
+                    const Text(
+                        'সালাত ও ইফতার-সাহরির সঠিক সময় হিসাব করার জন্য আপনার লোকেশন সেট করুন'),
+                    const SizedBox(height: 16),
+
+                    /// **Dropdown for Country Selection**
+                    DropdownButtonFormField<String>(
                       isExpanded: true,
                       value: selectedCountry,
                       decoration: InputDecoration(
                         labelText: "আপনার দেশ",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(color: Colors.blue, width: 2),
+                          borderSide:
+                              const BorderSide(color: Colors.blue, width: 2),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide:
-                              BorderSide(color: Colors.grey, width: 1.5),
+                              const BorderSide(color: Colors.grey, width: 1.5),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(color: Colors.blue, width: 2),
+                          borderSide:
+                              const BorderSide(color: Colors.blue, width: 2),
                         ),
                       ),
                       hint: const Text('আপনার দেশ'),
                       items: _countries
-                          .map((country) {
-                            return DropdownMenuItem(
-                              value: country.country,
-                              child: Text(country.country),
-                            );
-                          })
+                          .map((country) => country.country)
                           .toSet()
-                          .toList(),
+                          .map((countryName) {
+                        return DropdownMenuItem<String>(
+                          value: countryName,
+                          child: Text(countryName),
+                        );
+                      }).toList(),
                       onChanged: (value) {
-                        if (value != null) {
-                          setState(() {
-                            selectedCountry = value;
+                        setState(() {
+                          selectedCountry = value;
+                          selectedCities = _countries
+                              .firstWhere((c) => c.country == value,
+                                  orElse: () => Country(
+                                      country: '',
+                                      cities: [],
+                                      iso2: '',
+                                      iso3: ''))
+                              .cities
+                              .toSet()
+                              .toList(); // Ensure unique values
 
-                            selectedCities = List<String>.from(_countries
-                                .firstWhere((c) => c.country == value)
-                                .cities);
-
-                            if (selectedCity == null ||
-                                !selectedCities!.contains(selectedCity)) {
-                              selectedCity = null;
-                            }
-                          });
-                        }
+                          // Reset selectedCity if it's not in the new city list
+                          if (!selectedCities.contains(selectedCity)) {
+                            selectedCity = null;
+                          }
+                        });
                       },
                     ),
-                    SizedBox(height: 16),
-                    DropdownButtonFormField(
+                    const SizedBox(height: 16),
+
+                    /// **Dropdown for City Selection**
+                    DropdownButtonFormField<String>(
                       isExpanded: true,
                       value: selectedCity,
                       decoration: InputDecoration(
                         labelText: "আপনার জেলা",
                         border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(8),
-                          borderSide: BorderSide(
-                              color: Colors.blue,
-                              width: 2),
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide:
+                              const BorderSide(color: Colors.blue, width: 2),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(
-                              color: Colors.grey, width: 1.5),
+                          borderSide:
+                              const BorderSide(color: Colors.grey, width: 1.5),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(
-                              color: Colors.blue, width: 2), 
+                          borderSide:
+                              const BorderSide(color: Colors.blue, width: 2),
                         ),
                       ),
                       hint: const Text('আপনার জেলা'),
-                      items: selectedCities?.map((city) {
-                        return DropdownMenuItem(
+                      items: selectedCities.map((city) {
+                        return DropdownMenuItem<String>(
                           value: city,
                           child: Text(city),
                         );
@@ -209,8 +209,23 @@ class _LocationSettingsState extends State<LocationSettings> {
                         });
                       },
                     ),
-                  ]),
-          ),
-        ));
+                    const SizedBox(height: 16),
+                    CheckboxListTile(
+                        title: Text('অটোমেটিক লোকেশন টাইম'),
+                        value: _isAuto,
+                        onChanged: (value) async{
+                          await SharedData.setBool('isAuto', value!);
+                          setState(() {
+                            _isAuto = value;
+                          });
+                        },
+                        tristate: false,
+                        controlAffinity: ListTileControlAffinity.leading,
+                    )
+                  ],
+                ),
+        ),
+      ),
+    );
   }
 }

@@ -3,6 +3,7 @@ import 'package:mumin/app/components/mainpage/prayer_time_widget.dart';
 import 'package:mumin/app/components/mainpage/resticted_prayer_time_widget.dart';
 import 'package:mumin/app/components/mainpage/sahari_ifter_time_widget.dart';
 import 'package:mumin/app/components/mainpage/suntime_widget.dart';
+import 'package:mumin/app/services/prayer_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +13,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<void> checking() async {
+    try {
+      await PrayerService.getCurrentLocation();
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checking();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
