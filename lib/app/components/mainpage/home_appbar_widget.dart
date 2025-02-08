@@ -15,8 +15,6 @@ class _HomeAppBarActionsState extends State<HomeAppBarActions> {
   @override
   Widget build(BuildContext context) {
     final appProvider = Provider.of<AppProvider>(context);
-    print(appProvider.city);
-    print(appProvider.country);
     return InkWell(
       onTap: () {
         Navigator.push(

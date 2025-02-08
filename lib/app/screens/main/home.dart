@@ -16,25 +16,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
 Future<void> checking() async {
   try {
+
     await PrayerService.getCurrentLocation();
 
-    bool? isAuto = await SharedData.getBool('isAuto');
-    print("isAuto: $isAuto");
-
-    String? city;
-    String? country;
-
-    if (isAuto == true) {
-      city = SharedData.getString('auto_city');
-      country = SharedData.getString('country');
-    } else {
-      city = SharedData.getString('city');
-      country = SharedData.getString('country');
-    }
-    Provider.of<AppProvider>(context,listen: false).setCity(city!);
-    Provider.of<AppProvider>(context,listen: false).setCountry(country!);
+    String? city= SharedData.getString('city');
+    String? country = SharedData.getString('country');
+    
+    final appProvider = Provider.of<AppProvider>(context, listen: false);
+    appProvider.setCity(city!);
+    appProvider.setCountry(country!);
   } catch (e) {
     print('Error: $e');
   }
