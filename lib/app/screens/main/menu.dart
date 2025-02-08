@@ -26,11 +26,9 @@ class _MenuScreenState extends State<MenuScreen> {
                   bool? isAuto = await SharedData.getBool('isAuto');
                 print(isAuto);
                 String? city = await SharedData.getString('city');
-                String? lat = await SharedData.getString('latitude');
-                String? long = await SharedData.getString('longitude');
+                String? country = await SharedData.getString('country');
                 print(city);
-                print(lat);
-                print(long);
+                print(country);
                 }catch(e){
                   print(e);
                 }

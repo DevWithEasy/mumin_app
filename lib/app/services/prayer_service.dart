@@ -31,9 +31,16 @@ class PrayerService {
         Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high,
         );
-        getAddressFromLatLng(position);
+        //=============get auto position address============
+        // getAddressFromLatLng(position);
+        //==================================================
+
+        //=======save lat long and default location =========
         SharedData.setString('latitude', position.latitude.toString());
         SharedData.setString('longitude', position.longitude.toString());
+        SharedData.setString('city', 'Dhaka');
+        SharedData.setString('country', 'Bangladesh');
+        //==================================================
         getPrayersTime();
       } catch (e) {
         print(e);
@@ -54,6 +61,7 @@ class PrayerService {
       SharedData.setString('auto_city', place.subAdministrativeArea.toString());
       SharedData.setString('city', 'Dhaka');
       SharedData.setString('country', place.country.toString());
+      print(place.country);
     } catch (e) {
       print(e);
     }
@@ -62,59 +70,56 @@ class PrayerService {
   static Future<void> getPrayersTime() async {
     try {
       bool? isAuto = await SharedData.getBool('isAuto');
+      print(isAuto);
       if (isAuto == true) {
         String? latitude = await SharedData.getString('latitude');
         String? longitude = await SharedData.getString('longitude');
 
         // Ensure latitude & longitude are not null
         if (latitude != null && longitude != null) {
-          final String apiUrl =
-              "https://api.aladhan.com/v1/timings/${DateTime.now().millisecondsSinceEpoch ~/ 1000}?latitude=$latitude&longitude=$longitude&method=2";
-
-          final response = await http.get(Uri.parse(apiUrl));
-          if (response.statusCode == 200) {
-            final data = json.decode(response.body);
-            print('Auto Location Prayer Times:');
-            print(data);
-          } else {
-            print('Failed to fetch auto location prayer times.');
-          }
+          getTimeByPosition(latitude, longitude);
         } else {
-          print('Latitude or Longitude is missing.');
+          getTimeByCity('Dhaka', 'Bangladesh');
         }
       } else {
         String? country = await SharedData.getString('country');
         String? city = await SharedData.getString('city');
 
         if (country != null && city != null) {
-          final String apiUrl =
-              "https://api.aladhan.com/v1/timingsByCity?city=$city&country=$country&method=2";
-
-          final response = await http.get(Uri.parse(apiUrl));
-          if (response.statusCode == 200) {
-            final data = json.decode(response.body);
-            print('Selected City Prayer Times:');
-            print(data);
-          } else {
-            print('Failed to fetch prayer times for selected city.');
-          }
-        } else {
-          // Default to Dhaka, Bangladesh
-          final String apiUrl =
-              "https://api.aladhan.com/v1/timingsByCity?city=Dhaka&country=Bangladesh&method=2";
-
-          final response = await http.get(Uri.parse(apiUrl));
-          if (response.statusCode == 200) {
-            final data = json.decode(response.body);
-            print('Default Prayer Times (Dhaka, Bangladesh):');
-            print(data);
-          } else {
-            print('Failed to fetch default prayer times.');
-          }
+          getTimeByCity(city, country);
+        }else{
+          getTimeByCity('Dhaka', 'Bangladesh');
         }
       }
     } catch (e) {
       print('Error fetching prayer times: $e');
+    }
+  }
+
+  static Future<void> getTimeByPosition(
+      String latitude, String longitude) async {
+    final String apiUrl =
+        "https://api.aladhan.com/v1/timings/${DateTime.now().millisecondsSinceEpoch ~/ 1000}?latitude=$latitude&longitude=$longitude&method=2";
+
+    final response = await http.get(Uri.parse(apiUrl));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      print('Auto Location Prayer Times:');
+      print(data);
+    }
+  }
+
+  static Future<void> getTimeByCity(String city, String country) async {
+    final String apiUrl =
+        "https://api.aladhan.com/v1/timingsByCity?city=$city&country=$country&method=2";
+
+    final response = await http.get(Uri.parse(apiUrl));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      print('Selected City Prayer Times:');
+      print(data);
+    } else {
+      print('Failed to fetch prayer times for selected city.');
     }
   }
 }

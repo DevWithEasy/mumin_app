@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:mumin/app/providers/ReadProvider.dart';
+import 'package:mumin/app/providers/read_provider.dart';
+import 'package:mumin/app/providers/app_provider.dart';
 import 'package:mumin/app/screens/main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,8 @@ class _MuminAppState extends State<MuminApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_)=>Readprovider())
+          ChangeNotifierProvider(create: (_)=>Readprovider()),
+          ChangeNotifierProvider(create: (_)=>AppProvider())
         ],
         child: Builder(builder: (BuildContext contex) {
           return MaterialApp(

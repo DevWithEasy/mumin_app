@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:mumin/app/models/Country.dart';
+import 'package:mumin/app/providers/app_provider.dart';
 import 'package:mumin/app/services/shared_data.dart';
+import 'package:provider/provider.dart';
 
 class LocationSettings extends StatefulWidget {
   const LocationSettings({super.key});
@@ -25,41 +27,41 @@ class _LocationSettingsState extends State<LocationSettings> {
     _loadData();
   }
 
-Future<void> _loadData() async {
-  try {
-    final String jsonString =
-        await rootBundle.loadString('assets/data/countries.json');
-    final List<dynamic> jsonData = jsonDecode(jsonString);
-    final countries = jsonData.map((json) => Country.fromJson(json)).toList();
+  Future<void> _loadData() async {
+    try {
+      final String jsonString =
+          await rootBundle.loadString('assets/data/countries.json');
+      final List<dynamic> jsonData = jsonDecode(jsonString);
+      final countries = jsonData.map((json) => Country.fromJson(json)).toList();
 
-    final savedCountry = await SharedData.getString('country');
-    final savedCity = await SharedData.getString('city');
-    final isAuto = await SharedData.getBool('isAuto'); // Get saved isAuto value
+      final savedCountry = await SharedData.getString('country');
+      final savedCity = await SharedData.getString('city');
+      final isAuto =
+          await SharedData.getBool('isAuto'); // Get saved isAuto value
 
-    setState(() {
-      _countries = countries;
-      _isAuto = isAuto ?? false; // Use stored value or default to false
+      setState(() {
+        _countries = countries;
+        _isAuto = isAuto ?? false; // Use stored value or default to false
 
-      if (savedCountry != null) {
-        selectedCountry = savedCountry;
-        selectedCities = _countries
-            .firstWhere((c) => c.country == savedCountry,
-                orElse: () =>
-                    Country(country: '', cities: [], iso2: '', iso3: ''))
-            .cities
-            .toSet()
-            .toList(); // Ensure unique values
-      }
+        if (savedCountry != null) {
+          selectedCountry = savedCountry;
+          selectedCities = _countries
+              .firstWhere((c) => c.country == savedCountry,
+                  orElse: () =>
+                      Country(country: '', cities: [], iso2: '', iso3: ''))
+              .cities
+              .toSet()
+              .toList(); // Ensure unique values
+        }
 
-      if (savedCity != null && selectedCities.contains(savedCity)) {
-        selectedCity = savedCity;
-      }
-    });
-  } catch (e) {
-    print('Error loading or parsing JSON: $e');
+        if (savedCity != null && selectedCities.contains(savedCity)) {
+          selectedCity = savedCity;
+        }
+      });
+    } catch (e) {
+      print('Error loading or parsing JSON: $e');
+    }
   }
-}
-
 
   Future<void> fetchPrayersTime() async {
     if (selectedCity == null || selectedCountry == null) {
@@ -69,6 +71,9 @@ Future<void> _loadData() async {
 
     await SharedData.setString('country', selectedCountry!);
     await SharedData.setString('city', selectedCity!);
+
+    Provider.of<AppProvider>(context,listen: false).setCity(selectedCity!);
+    Provider.of<AppProvider>(context,listen: false).setCountry(selectedCountry!);
 
     var url =
         'https://api.aladhan.com/v1/timingsByCity?city=$selectedCity&country=$selectedCountry';
@@ -97,7 +102,7 @@ Future<void> _loadData() async {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('লোকেশন সেটিংস', style: TextStyle(fontSize: 16)),
-        elevation: 0.1,
+        elevation: 1,
         backgroundColor: Colors.white,
         shadowColor: Colors.blueGrey,
         actions: [
@@ -211,16 +216,16 @@ Future<void> _loadData() async {
                     ),
                     const SizedBox(height: 16),
                     CheckboxListTile(
-                        title: Text('অটোমেটিক লোকেশন টাইম'),
-                        value: _isAuto,
-                        onChanged: (value) async{
-                          await SharedData.setBool('isAuto', value!);
-                          setState(() {
-                            _isAuto = value;
-                          });
-                        },
-                        tristate: false,
-                        controlAffinity: ListTileControlAffinity.leading,
+                      title: Text('অটোমেটিক লোকেশন টাইম'),
+                      value: _isAuto,
+                      onChanged: (value) async {
+                        await SharedData.setBool('isAuto', value!);
+                        setState(() {
+                          _isAuto = value;
+                        });
+                      },
+                      tristate: false,
+                      controlAffinity: ListTileControlAffinity.leading,
                     )
                   ],
                 ),
