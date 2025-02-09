@@ -23,7 +23,7 @@ class PrayerTimes {
       'date': date.toJson(),
       'meta': meta.toJson(),
     };
-  }
+  };
 }
 
 class Timings {

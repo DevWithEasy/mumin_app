@@ -12,19 +12,19 @@ class SunTime extends StatelessWidget {
         color: const Color.fromARGB(255, 201, 228, 248),
         borderRadius: BorderRadius.circular(6),
         image: DecorationImage(
-          image: AssetImage('assets/images/suntime.png'),
+          image: AssetImage('assets/images/home/suntime.png'),
           fit: BoxFit.cover,
         ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max, // Ensure the Row occupies full width
+        mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
             flex: 1,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // Center the first column vertically
-              crossAxisAlignment: CrossAxisAlignment.center, // Center the content horizontally
+              mainAxisAlignment: MainAxisAlignment.center, 
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   DateService.getTodayBengaliDayName(),
