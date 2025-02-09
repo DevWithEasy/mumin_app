@@ -103,8 +103,6 @@ class _LocationSettingsState extends State<LocationSettings> {
       appBar: AppBar(
         title: const Text('লোকেশন সেটিংস', style: TextStyle(fontSize: 16)),
         elevation: 1,
-        backgroundColor: Colors.white,
-        shadowColor: Colors.blueGrey,
         actions: [
           ElevatedButton(
             onPressed: fetchPrayersTime,
@@ -124,7 +122,6 @@ class _LocationSettingsState extends State<LocationSettings> {
                         'সালাত ও ইফতার-সাহরির সঠিক সময় হিসাব করার জন্য আপনার লোকেশন সেট করুন'),
                     const SizedBox(height: 16),
 
-                    /// **Dropdown for Country Selection**
                     DropdownButtonFormField<String>(
                       isExpanded: true,
                       value: selectedCountry,
@@ -169,8 +166,7 @@ class _LocationSettingsState extends State<LocationSettings> {
                               .cities
                               .toSet()
                               .toList(); // Ensure unique values
-
-                          // Reset selectedCity if it's not in the new city list
+                              
                           if (!selectedCities.contains(selectedCity)) {
                             selectedCity = null;
                           }

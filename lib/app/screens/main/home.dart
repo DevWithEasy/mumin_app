@@ -21,11 +21,13 @@ Future<void> checking() async {
   try {
 
     await PrayerService.getCurrentLocation();
-
+    
+    bool? isAuto= SharedData.getBool('isAuto');
     String? city= SharedData.getString('city');
     String? country = SharedData.getString('country');
     
     final appProvider = Provider.of<AppProvider>(context, listen: false);
+    appProvider.setIsAuto(isAuto!);
     appProvider.setCity(city!);
     appProvider.setCountry(country!);
   } catch (e) {

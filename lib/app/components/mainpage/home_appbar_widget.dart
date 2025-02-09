@@ -22,28 +22,34 @@ class _HomeAppBarActionsState extends State<HomeAppBarActions> {
           MaterialPageRoute(builder: (context) => LocationSettings()),
         );
       },
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.place, color: Colors.blueGrey),
-          const SizedBox(width: 8),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                appProvider.city,
-                style: const TextStyle(fontSize: 12, color: Colors.black),
-              ),
-              Text(
-                appProvider.country,
-                style: const TextStyle(fontSize: 10, color: Colors.grey),
-              ),
-            ],
-          ),
-          const SizedBox(width: 16),
-        ],
-      ),
+      child: appProvider.isAuto ?
+      LocationName(Icons.gps_fixed,'GPS','Automatic')
+      : LocationName(Icons.place,appProvider.city,appProvider.country)
+    );
+  }
+
+  Row LocationName(IconData icon,String city,String country) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, color: Colors.blueGrey),
+        const SizedBox(width: 8),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              city,
+              style: const TextStyle(fontSize: 12, color: Colors.black),
+            ),
+            Text(
+              country,
+              style: const TextStyle(fontSize: 10, color: Colors.grey),
+            ),
+          ],
+        ),
+        const SizedBox(width: 16),
+      ],
     );
   }
 }
