@@ -1,3 +1,5 @@
+import 'package:mumin/app/utils/convert_to_bangla_number.dart';
+
 class PrayerTimes {
   Timings timings;
   Date date;
@@ -17,12 +19,126 @@ class PrayerTimes {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson(String? s) {
     return {
       'timings': timings.toJson(),
       'date': date.toJson(),
       'meta': meta.toJson(),
     };
+  }
+
+  String sunrise() {
+    return convertToBanglaNumbers(timings.sunrise);
+    // return timings.sunrise;
+  }
+
+  String sunset() {
+    return convertToBanglaNumbers(timings.sunset);
+    // return timings.sunset;
+  }
+
+  String sahri() {
+    return calculateTime(timings.fajr, -4);
+  }
+
+  String ifter() {
+    return timings.maghrib;
+  }
+
+  String fajr() {
+    String wakt = timings.fajr;
+    String from = wakt;
+    String to = sunrise();
+    return '$from - $to';
+  }
+
+  String dhuhr() {
+    String wakt = timings.dhuhr;
+    String from = wakt;
+    String to = calculateTime(timings.asr, -1);
+    return '$from - $to';
+  }
+
+  String asr() {
+    String wakt = timings.asr;
+    String from = wakt;
+    String to = calculateTime(timings.maghrib, -4);
+    return '$from - $to';
+  }
+
+  String maghrib() {
+    String wakt = timings.maghrib;
+    String from = wakt;
+    String to = calculateTime(timings.isha, -1);
+    return '$from - $to';
+  }
+
+  String isha() {
+    String wakt = timings.isha;
+    String from = wakt;
+    String to = calculateTime(timings.fajr, -5);
+    return '$from - $to';
+  }
+
+  List<Map<String, String>> waktTimes() {
+    return [
+      {'name': 'ফজর', 'time': convertToBanglaNumbers(fajr())},
+      {'name': 'যোহর', 'time': convertToBanglaNumbers(dhuhr())},
+      {'name': 'আসর', 'time': convertToBanglaNumbers(asr())},
+      {'name': 'মাগরিব', 'time': convertToBanglaNumbers(maghrib())},
+      {'name': 'এশা', 'time': convertToBanglaNumbers(isha())},
+    ];
+  }
+
+  String morning() {
+    String from = timings.sunrise;
+    String to = calculateTime(from, 15);
+    return '$from - $to';
+  }
+
+  String noon() {
+    String dhuhr = timings.dhuhr;
+    String from = calculateTime(dhuhr, -9);
+    String to = calculateTime(dhuhr, -1);
+    return '$from - $to';
+  }
+
+  String afternoon() {
+    String maghrib = timings.maghrib;
+    String from = calculateTime(maghrib, -15);
+    String to = calculateTime(maghrib, -4);
+    return '$from - $to';
+  }
+
+  List<Map<String,String>> restrictedTimes(){
+    return [
+      {'name': 'ভোরঃ', 'time': convertToBanglaNumbers(morning())},
+      {'name': 'দুপুরঃ', 'time': convertToBanglaNumbers(noon())},
+      {'name': 'সন্ধ্যাঃ', 'time': convertToBanglaNumbers(afternoon())},
+    ];
+  }
+
+  String calculateTime(String time, int minutesToAdd) {
+    List<String> parts = time.split(':');
+    int hours = int.parse(parts[0]);
+    int minutes = int.parse(parts[1]);
+
+    int totalMinutes = hours * 60 + minutes;
+
+    totalMinutes += minutesToAdd;
+
+    totalMinutes = totalMinutes % (24 * 60);
+    if (totalMinutes < 0) {
+      totalMinutes += 24 * 60;
+    }
+
+    int newHours = totalMinutes ~/ 60;
+    int newMinutes = totalMinutes % 60;
+
+    String formattedTime =
+        '${newHours.toString().padLeft(2, '0')}:${newMinutes.toString().padLeft(2, '0')}';
+
+    return formattedTime;
   }
 }
 

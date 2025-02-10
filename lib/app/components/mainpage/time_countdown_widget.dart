@@ -3,15 +3,13 @@ import 'dart:math';
 import 'package:intl/intl.dart';
 
 class CountdownTimer extends StatefulWidget {
-  final String startTime;
   final String endTime;
   final double height;
   final double width;
-  final double fontSize; 
+  final double fontSize;
 
   const CountdownTimer({
     super.key,
-    required this.startTime,
     required this.endTime,
     required this.height,
     required this.width,
@@ -31,25 +29,33 @@ class _CountdownTimerState extends State<CountdownTimer>
   @override
   void initState() {
     super.initState();
-    duration = _calculateDuration(widget.startTime, widget.endTime);
-    remainingTime = duration;
-    _controller = AnimationController(
-      vsync: this,
-      duration: duration,
-    )..addListener(() {
-        setState(() {
-          remainingTime = _calculateRemainingTime();
-        });
-      });
-    _controller.forward();
-  }
-
-  Duration _calculateDuration(String startTime, String endTime) {
+    
+    // Get current time as start time
+    final now = DateTime.now();
     final format = DateFormat("HH:mm");
-    final start = format.parse(startTime);
-    final end = format.parse(endTime);
+    
+    try {
+      final end = format.parse(widget.endTime);
+      final endTimeToday = DateTime(now.year, now.month, now.day, end.hour, end.minute);
 
-    return end.difference(start);
+      duration = endTimeToday.difference(now);
+      remainingTime = duration.isNegative ? Duration.zero : duration; // Ensure non-negative
+
+      _controller = AnimationController(
+        vsync: this,
+        duration: remainingTime,
+      )..addListener(() {
+          setState(() {
+            remainingTime = _calculateRemainingTime();
+          });
+        });
+
+      _controller.forward();
+    } catch (e) {
+      print("Invalid endTime format: ${widget.endTime}");
+      duration = Duration.zero;
+      remainingTime = Duration.zero;
+    }
   }
 
   Duration _calculateRemainingTime() {
@@ -69,13 +75,13 @@ class _CountdownTimerState extends State<CountdownTimer>
     final seconds = remainingTime.inSeconds % 60;
 
     return SizedBox(
-      width: widget.width, // Compact widget size
+      width: widget.width,
       height: widget.height,
       child: Stack(
         alignment: Alignment.center,
         children: [
           CustomPaint(
-            size: Size(widget.width-10, widget.height-10), // Adjust circle size
+            size: Size(widget.width - 10, widget.height - 10),
             painter: CountdownPainter(
               animation: _controller,
               strokeWidth: 5,
@@ -109,25 +115,22 @@ class CountdownPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     double progress = animation.value;
-
     final center = Offset(size.width / 2, size.height / 2);
     final radius = (size.width - strokeWidth) / 2;
 
-    // Draw the grey background circle
     final backgroundPaint = Paint()
       ..color = backgroundColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
     canvas.drawCircle(center, radius, backgroundPaint);
 
-    // Draw the green progress circle
     final foregroundPaint = Paint()
       ..color = foregroundColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round;
-    double startAngle = -pi / 2; // Start at the top
-    double sweepAngle = 2 * pi * (1 - progress); // Decreasing animation
+    double startAngle = -pi / 2;
+    double sweepAngle = 2 * pi * (1 - progress);
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: radius),
       startAngle,
@@ -142,6 +145,7 @@ class CountdownPainter extends CustomPainter {
     return true;
   }
 }
+
 
 // import 'package:flutter/material.dart';
 // import 'dart:math';

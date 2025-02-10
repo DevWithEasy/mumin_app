@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mumin/app/components/mainpage/resticed_prayer_bottomsheet.dart';
+import 'package:mumin/app/models/PrayerTimes.dart';
 
 class RestictedPrayerTime extends StatelessWidget {
-  const RestictedPrayerTime({super.key});
+  final PrayerTimes prayerTimes;
+  const RestictedPrayerTime({super.key, required this.prayerTimes});
 
   @override
   Widget build(BuildContext context) {
@@ -51,43 +53,22 @@ class RestictedPrayerTime extends StatelessWidget {
                   ),
                   SizedBox(height: 12),
                   Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'ভোরঃ',
-                          ),
-                          SizedBox(width: 8),
-                          Text(
-                            '৬ঃ৪২ - ৬ঃ৫৭',
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Text(
-                            'ভোরঃ',
-                          ),
-                          SizedBox(width: 8),
-                          Text(
-                            '৬ঃ৪২ - ৬ঃ৫৭',
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Text(
-                            'ভোরঃ',
-                          ),
-                          SizedBox(width: 8),
-                          Text(
-                            '৬ঃ৪২ - ৬ঃ৫৭',
-                          ),
-                        ],
-                      ),
-                    ],
+                    children: prayerTimes.restrictedTimes().map((restrictedWakt) {
+                      return Column(children: [
+                        Row(
+                          children: [
+                            Text(
+                              restrictedWakt['name']!,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              restrictedWakt['time']!,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 4)
+                      ]);
+                    }).toList(),
                   ),
                 ],
               ),

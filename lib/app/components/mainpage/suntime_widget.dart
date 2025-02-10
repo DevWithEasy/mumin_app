@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mumin/app/models/PrayerTimes.dart';
 import 'package:mumin/app/services/date_service.dart';
 
 class SunTime extends StatelessWidget {
-  const SunTime({super.key});
+  final PrayerTimes prayerTimes;
+  const SunTime({super.key, required this.prayerTimes});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class SunTime extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, 
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
@@ -32,11 +34,13 @@ class SunTime extends StatelessWidget {
                 ),
                 Text(
                   DateService.getCurrentBengaliDate(),
-                  style: TextStyle(color: const Color.fromARGB(255, 240, 237, 237)),
+                  style: TextStyle(
+                      color: const Color.fromARGB(255, 240, 237, 237)),
                 ),
                 Text(
                   DateService.getTodayHijriDate(),
-                  style: TextStyle(color: const Color.fromARGB(255, 240, 237, 237)),
+                  style: TextStyle(
+                      color: const Color.fromARGB(255, 240, 237, 237)),
                 ),
               ],
             ),
@@ -52,13 +56,14 @@ class SunTime extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      '০৭ঃ০০',
+                      prayerTimes.sunrise(),
                       style: TextStyle(color: Colors.white),
                     ),
                     SizedBox(height: 4),
                     Text(
                       'সুর্যোদয়',
-                      style: TextStyle(color: const Color.fromARGB(255, 240, 237, 237)),
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 240, 237, 237)),
                     ),
                   ],
                 ),
@@ -67,13 +72,14 @@ class SunTime extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      '০৭ঃ০০',
+                      prayerTimes.sunset(),
                       style: TextStyle(color: Colors.white),
                     ),
                     SizedBox(height: 4),
                     Text(
                       'সুর্যাস্ত',
-                      style: TextStyle(color: const Color.fromARGB(255, 240, 237, 237)),
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 240, 237, 237)),
                     ),
                   ],
                 ),

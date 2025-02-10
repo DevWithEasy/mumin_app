@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mumin/app/components/mainpage/time_countdown_widget.dart';
+import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 
 class SahriifterScreen extends StatelessWidget {
-  const SahriifterScreen({super.key});
+  final String sahri;
+  final String ifter;
+  const SahriifterScreen({super.key, required this.sahri, required this.ifter});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class SahriifterScreen extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   width: double.infinity,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
@@ -31,8 +34,7 @@ class SahriifterScreen extends StatelessWidget {
                         style: TextStyle(fontSize: 20)),
                     SizedBox(height: 10),
                     CountdownTimer(
-                      startTime: '07:00',
-                      endTime: '07:05',
+                      endTime: ifter,
                       height: 150,
                       width: 150,
                       fontSize: 20,
@@ -50,13 +52,13 @@ class SahriifterScreen extends StatelessWidget {
                   ])),
               SizedBox(height: 12),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 8,vertical: 16),
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                 decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: const Color.fromARGB(255, 237, 255, 237),
-                      border: Border.all(
-                          width: 1.5,
-                          color: const Color.fromARGB(255, 213, 248, 213))),
+                    borderRadius: BorderRadius.circular(5),
+                    color: const Color.fromARGB(255, 237, 255, 237),
+                    border: Border.all(
+                        width: 1.5,
+                        color: const Color.fromARGB(255, 213, 248, 213))),
                 child: Row(
                   children: [
                     // First Column
@@ -65,8 +67,8 @@ class SahriifterScreen extends StatelessWidget {
                         height: 100,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Text('৫ঃ২৫', style: TextStyle(fontSize: 20)),
+                          children:  [
+                            Text(convertToBanglaNumbers(sahri), style: TextStyle(fontSize: 20)),
                             SizedBox(height: 5),
                             Text('সাহরির শেষ'),
                             SizedBox(height: 16),
@@ -86,8 +88,8 @@ class SahriifterScreen extends StatelessWidget {
                         height: 100,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Text('৫ঃ২৫', style: TextStyle(fontSize: 20)),
+                          children: [
+                            Text(convertToBanglaNumbers(ifter), style: TextStyle(fontSize: 20)),
                             SizedBox(height: 5),
                             Text('ইফতারের শুরু'),
                             SizedBox(height: 16),

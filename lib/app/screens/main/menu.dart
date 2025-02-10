@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:mumin/app/services/shared_data.dart';
 
@@ -9,31 +11,43 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  Future<void> checkInternet() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+
+    if (connectivityResult == ConnectivityResult.none) {
+      // 🛑 No network available, immediately print
+      print("Device is not connected to the internet");
+      return;
+    }
+
+    // ✅ Has network, now check actual internet access
+    try {
+      final result = await InternetAddress.lookup('example.com')
+          .timeout(Duration(seconds: 2)); // Prevent long wait
+
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print("Device is connected to the internet");
+      } else {
+        print("Device is not connected to the internet");
+      }
+    } catch (e) {
+      print("Device is not connected to the internet");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Location Example"),
-      ),
+      appBar: AppBar(title: Text("Location Example")),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () async {
-                try{
-                  bool? isAuto = await SharedData.getBool('isAuto');
-                print(isAuto);
-                String? city = await SharedData.getString('city');
-                String? country = await SharedData.getString('country');
-                print(city);
-                print(country);
-                }catch(e){
-                  print(e);
-                }
+              onPressed: () {
+                print(SharedData.getString('prayer_time'));
               },
-              child: Text("Get Location"),
+              child: Text("Check"),
             ),
           ],
         ),
