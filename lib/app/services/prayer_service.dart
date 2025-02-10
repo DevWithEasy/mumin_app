@@ -142,4 +142,28 @@ class PrayerService {
       throw Exception("Error fetching prayer times by city.");
     }
   }
+
+  static Future<void> getMonthlyTimes(int month, int year) async {
+    try {
+      bool? isAuto = await SharedData.getBool('isAuto');
+      String? latitude = await SharedData.getString('latitude');
+      String? longitude = await SharedData.getString('longitude');
+      String? country = await SharedData.getString('country') ?? 'Bangladesh';
+      String? city = await SharedData.getString('city') ?? 'Dhaka';
+      final String apiUrl = isAuto == true
+          ? 'https://api.aladhan.com/v1/calendar?latitude=$latitude&longitude=$longitude&method=2&month=$month&year=$year'
+          : 'https://api.aladhan.com/v1/calendarByCity?city=$city&country=$country&method=2&month=$month&year=$year';
+
+      final response = await http.get(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        print(data);
+      } else {
+        throw Exception("Failed to fetch prayer times for $city, $country.");
+      }
+    } catch (e) {
+      print("Error fetching monthly prayer times: $e");
+      throw Exception("Error fetching monthly prayer times.");
+    }
+  }
 }

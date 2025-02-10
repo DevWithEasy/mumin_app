@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class CalenderScreen extends StatefulWidget {
   const CalenderScreen({super.key});
@@ -13,8 +15,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
   late int currentDay;
   late ScrollController scrollController;
 
-  // Month names and values
-  final List<Map<String, dynamic>> months = [
+  List<Map<String, dynamic>> months = [
     {"name": "January", "value": 1},
     {"name": "February", "value": 2},
     {"name": "March", "value": 3},
@@ -30,33 +31,52 @@ class _CalenderScreenState extends State<CalenderScreen> {
   ];
 
   late List<int> years;
+  List<dynamic> prayerTimes = []; // Store fetched prayer times
 
   @override
   void initState() {
     super.initState();
-
-    // Initialize the scroll controller
     scrollController = ScrollController();
-
-    // Get current date
     DateTime now = DateTime.now();
-
-    // Initialize default selected month, year, and current day
     selectedMonth = months[now.month - 1]["name"];
     selectedYear = now.year;
     currentDay = now.day;
-
-    // Generate the year list (current year ± 5 years)
     years = List.generate(11, (index) => now.year - 5 + index);
 
-    // Scroll to the current day after the widget is built
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      scrollController.animateTo(
-        (currentDay - 1) * 308.0, // Each item has a height of 300 + padding
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOut,
-      );
-    });
+    fetchMonthlyTimes(now.month, now.year);
+  }
+
+  Future<void> fetchMonthlyTimes(int month, int year) async {
+    try {
+      final String latitude = "23.8103"; // Example latitude (Dhaka)
+      final String longitude = "90.4125"; // Example longitude (Dhaka)
+      final String country = "Bangladesh";
+      final String city = "Dhaka";
+
+      final String apiUrl =
+          'https://api.aladhan.com/v1/calendarByCity?city=$city&country=$country&method=2&month=$month&year=$year';
+
+      final response = await http.get(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          prayerTimes = data["data"];
+        });
+
+        // Scroll to current day after data is loaded
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          scrollController.animateTo(
+            (currentDay - 1) * 308.0, // Adjust height if necessary
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeInOut,
+          );
+        });
+      } else {
+        throw Exception("Failed to fetch prayer times.");
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
   }
 
   @override
@@ -76,7 +96,6 @@ class _CalenderScreenState extends State<CalenderScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               children: [
-                // Month Dropdown
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -91,6 +110,9 @@ class _CalenderScreenState extends State<CalenderScreen> {
                           setState(() {
                             selectedMonth = newValue!;
                           });
+                          int selectedMonthValue = months
+                              .firstWhere((month) => month["name"] == newValue)["value"];
+                          fetchMonthlyTimes(selectedMonthValue, selectedYear);
                         },
                         isExpanded: true,
                         items: months.map((month) {
@@ -103,8 +125,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 16), // Space between the two dropdowns
-                // Year Dropdown
+                const SizedBox(width: 16),
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -119,6 +140,9 @@ class _CalenderScreenState extends State<CalenderScreen> {
                           setState(() {
                             selectedYear = newValue!;
                           });
+                          int selectedMonthValue = months
+                              .firstWhere((month) => month["name"] == selectedMonth)["value"];
+                          fetchMonthlyTimes(selectedMonthValue, selectedYear);
                         },
                         isExpanded: true,
                         items: years.map((year) {
@@ -137,10 +161,11 @@ class _CalenderScreenState extends State<CalenderScreen> {
           Expanded(
             child: ListView.builder(
               controller: scrollController,
-              itemCount: 31, // Assuming a maximum of 31 days in a month
+              itemCount: prayerTimes.length,
               itemBuilder: (context, index) {
                 int day = index + 1;
                 bool isToday = (day == currentDay);
+                Map<String, dynamic> timings = prayerTimes[index]["timings"];
 
                 return Container(
                   height: 300,
@@ -151,28 +176,39 @@ class _CalenderScreenState extends State<CalenderScreen> {
                     border: Border.all(
                       color: isToday ? Colors.green : Colors.grey,
                     ),
-                    boxShadow: isToday ? [
-                      BoxShadow(
-                        color: Colors.green.withOpacity(0.5),
-                        offset: Offset(0, 2),
-                        blurRadius: 4,
-                      )
-                    ] : [],
+                    boxShadow: isToday
+                        ? [
+                            BoxShadow(
+                              color: Colors.green.withOpacity(0.5),
+                              offset: Offset(0, 2),
+                              blurRadius: 4,
+                            )
+                          ]
+                        : [],
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Row(
+                  child: Column(
                     children: [
-                      Column(
-                        children: [
-                          Text(
-                            "Day $day",
-                            style: TextStyle(
-                              color: isToday ? Colors.green : Colors.black,
-                              fontWeight: isToday ? FontWeight.bold : FontWeight.normal,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        "Day $day",
+                        style: TextStyle(
+                          color: isToday ? Colors.green : Colors.black,
+                          fontWeight: isToday ? FontWeight.bold : FontWeight.normal,
+                        ),
                       ),
+                      const SizedBox(height: 10),
+                      prayerTimes.isNotEmpty
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Fajr: ${timings['Fajr']}"),
+                                Text("Dhuhr: ${timings['Dhuhr']}"),
+                                Text("Asr: ${timings['Asr']}"),
+                                Text("Maghrib: ${timings['Maghrib']}"),
+                                Text("Isha: ${timings['Isha']}"),
+                              ],
+                            )
+                          : const Center(child: CircularProgressIndicator()),
                     ],
                   ),
                 );
