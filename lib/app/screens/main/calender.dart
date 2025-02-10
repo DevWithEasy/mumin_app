@@ -1,6 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:mumin/app/models/PrayerTimes.dart';
+import 'package:mumin/app/services/prayer_service.dart';
+import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 
 class CalenderScreen extends StatefulWidget {
   const CalenderScreen({super.key});
@@ -31,7 +32,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
   ];
 
   late List<int> years;
-  List<dynamic> prayerTimes = []; // Store fetched prayer times
+  List<PrayerTimes> _monthlyPrayerTimes = []; // Store fetched prayer times
 
   @override
   void initState() {
@@ -43,37 +44,22 @@ class _CalenderScreenState extends State<CalenderScreen> {
     currentDay = now.day;
     years = List.generate(11, (index) => now.year - 5 + index);
 
-    fetchMonthlyTimes(now.month, now.year);
+    _loadData(now.month, now.year);
   }
 
-  Future<void> fetchMonthlyTimes(int month, int year) async {
+  Future<void> _loadData(int month, int year) async {
     try {
-      final String latitude = "23.8103"; // Example latitude (Dhaka)
-      final String longitude = "90.4125"; // Example longitude (Dhaka)
-      final String country = "Bangladesh";
-      final String city = "Dhaka";
-
-      final String apiUrl =
-          'https://api.aladhan.com/v1/calendarByCity?city=$city&country=$country&method=2&month=$month&year=$year';
-
-      final response = await http.get(Uri.parse(apiUrl));
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        setState(() {
-          prayerTimes = data["data"];
-        });
-
-        // Scroll to current day after data is loaded
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          scrollController.animateTo(
-            (currentDay - 1) * 308.0, // Adjust height if necessary
-            duration: const Duration(seconds: 1),
-            curve: Curves.easeInOut,
-          );
-        });
-      } else {
-        throw Exception("Failed to fetch prayer times.");
-      }
+      final data = await PrayerService.getMonthlyTimes(month, year);
+      setState(() {
+        _monthlyPrayerTimes = data;
+      });
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        scrollController.animateTo(
+          (currentDay - 1) * 308.0,
+          duration: const Duration(seconds: 1),
+          curve: Curves.easeInOut,
+        );
+      });
     } catch (e) {
       print("Error: $e");
     }
@@ -110,9 +96,9 @@ class _CalenderScreenState extends State<CalenderScreen> {
                           setState(() {
                             selectedMonth = newValue!;
                           });
-                          int selectedMonthValue = months
-                              .firstWhere((month) => month["name"] == newValue)["value"];
-                          fetchMonthlyTimes(selectedMonthValue, selectedYear);
+                          int selectedMonthValue = months.firstWhere(
+                              (month) => month["name"] == newValue)["value"];
+                          _loadData(selectedMonthValue, selectedYear);
                         },
                         isExpanded: true,
                         items: months.map((month) {
@@ -140,9 +126,9 @@ class _CalenderScreenState extends State<CalenderScreen> {
                           setState(() {
                             selectedYear = newValue!;
                           });
-                          int selectedMonthValue = months
-                              .firstWhere((month) => month["name"] == selectedMonth)["value"];
-                          fetchMonthlyTimes(selectedMonthValue, selectedYear);
+                          int selectedMonthValue = months.firstWhere((month) =>
+                              month["name"] == selectedMonth)["value"];
+                          _loadData(selectedMonthValue, selectedYear);
                         },
                         isExpanded: true,
                         items: years.map((year) {
@@ -159,61 +145,105 @@ class _CalenderScreenState extends State<CalenderScreen> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              controller: scrollController,
-              itemCount: prayerTimes.length,
-              itemBuilder: (context, index) {
-                int day = index + 1;
-                bool isToday = (day == currentDay);
-                Map<String, dynamic> timings = prayerTimes[index]["timings"];
+            child: _monthlyPrayerTimes.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    controller: scrollController,
+                    itemCount: _monthlyPrayerTimes.length,
+                    itemBuilder: (context, index) {
+                      int day = index + 1;
+                      bool isToday = (day == currentDay);
+                      PrayerTimes prayerTimes = _monthlyPrayerTimes[index];
 
-                return Container(
-                  height: 300,
-                  padding: const EdgeInsets.all(5),
-                  margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(
-                      color: isToday ? Colors.green : Colors.grey,
-                    ),
-                    boxShadow: isToday
-                        ? [
-                            BoxShadow(
-                              color: Colors.green.withOpacity(0.5),
-                              offset: Offset(0, 2),
-                              blurRadius: 4,
+                      return Container(
+                        height: 300,
+                        margin: const EdgeInsets.only(
+                            left: 8, right: 8, bottom: 12),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: isToday
+                                ? Border.all(
+                                    color: Colors.green,
+                                    width: 1.5,
+                                  )
+                                : null,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                spreadRadius: 0.5,
+                                blurRadius: 1,
+                              )
+                            ]),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      color: Colors.yellow.shade50,
+                                      width: double.infinity,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          prayerTimes.dayNumber(),
+                                          style: TextStyle(
+                                            fontSize: 30,
+                                            color: Colors.blueGrey
+                                          ),
+                                        ),
+                                        Text(
+                                          '${prayerTimes.engMonth()}, ${prayerTimes.engYear()}',
+                                          style: TextStyle(
+                                            color: Colors.blueGrey
+                                          )
+                                        ),
+                                        Text(
+                                          prayerTimes.dayName(),
+                                          style: TextStyle(
+                                            color: Colors.blueGrey
+                                          )
+                                        ),
+                                        Text('${prayerTimes.hijriDayNumber()} ${prayerTimes.hijriMonth()}, ${prayerTimes.hijriYear()}'),
+                                      ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    color: Colors.green.shade100,
+                                    height: 80,
+                                    width: double.infinity,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text('সাহরি শেষঃ ${convertToBanglaNumbers(prayerTimes.sahri())}'),
+                                        Text('সাহরি শেষঃ ${convertToBanglaNumbers(prayerTimes.ifter())}'),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Container(
+                                color: Colors.green.shade50,
+                                height: double.infinity,
+                                child: Column(
+                                  children: [],
+                                ),
+                              ),
                             )
-                          ]
-                        : [],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        "Day $day",
-                        style: TextStyle(
-                          color: isToday ? Colors.green : Colors.black,
-                          fontWeight: isToday ? FontWeight.bold : FontWeight.normal,
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      prayerTimes.isNotEmpty
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Fajr: ${timings['Fajr']}"),
-                                Text("Dhuhr: ${timings['Dhuhr']}"),
-                                Text("Asr: ${timings['Asr']}"),
-                                Text("Maghrib: ${timings['Maghrib']}"),
-                                Text("Isha: ${timings['Isha']}"),
-                              ],
-                            )
-                          : const Center(child: CircularProgressIndicator()),
-                    ],
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
         ],
       ),

@@ -28,56 +28,81 @@ class PrayerTimes {
   }
 
   String sunrise() {
-    return convertToBanglaNumbers(timings.sunrise);
+    return convertToBanglaNumbers(extractTime(timings.sunrise));
     // return timings.sunrise;
   }
 
   String sunset() {
-    return convertToBanglaNumbers(timings.sunset);
+    return convertToBanglaNumbers(extractTime(timings.sunset));
     // return timings.sunset;
   }
 
   String sahri() {
-    return calculateTime(timings.fajr, -4);
+    return calculateTime(extractTime(timings.fajr), -4);
   }
 
   String ifter() {
-    return timings.maghrib;
+    return extractTime(timings.maghrib);
+  }
+
+  String fajr_start() {
+    return extractTime(timings.fajr);
+  }
+
+  String fajr_end() {
+    return extractTime(timings.sunrise);
   }
 
   String fajr() {
-    String wakt = timings.fajr;
-    String from = wakt;
-    String to = sunrise();
-    return '$from - $to';
+    return '${fajr_start()} - ${fajr_end()}';
+  }
+
+  String dhuhr_start() {
+    return extractTime(timings.dhuhr);
+  }
+
+  String dhuhr_end() {
+    return calculateTime(extractTime(timings.asr), -1);
   }
 
   String dhuhr() {
-    String wakt = timings.dhuhr;
-    String from = wakt;
-    String to = calculateTime(timings.asr, -1);
-    return '$from - $to';
+    return '${dhuhr_start()} - ${dhuhr_end()}';
+  }
+
+  String asr_start() {
+    return extractTime(timings.asr);
+  }
+
+  String asr_end() {
+    return calculateTime(extractTime(timings.maghrib), -4);
   }
 
   String asr() {
-    String wakt = timings.asr;
-    String from = wakt;
-    String to = calculateTime(timings.maghrib, -4);
-    return '$from - $to';
+    return '${asr_start()} - ${asr_end()}';
+  }
+
+  String maghrib_start() {
+    return extractTime(timings.maghrib);
+  }
+
+  String maghrib_end() {
+    return calculateTime(extractTime(timings.isha), -1);
   }
 
   String maghrib() {
-    String wakt = timings.maghrib;
-    String from = wakt;
-    String to = calculateTime(timings.isha, -1);
-    return '$from - $to';
+    return '${maghrib_start()} - ${maghrib_end()}';
+  }
+
+  String isha_start() {
+    return extractTime(timings.isha);
+  }
+
+  String isha_end() {
+    return calculateTime(extractTime(timings.fajr), -5);
   }
 
   String isha() {
-    String wakt = timings.isha;
-    String from = wakt;
-    String to = calculateTime(timings.fajr, -5);
-    return '$from - $to';
+    return '${isha_start()} - ${isha_end()}';
   }
 
   List<Map<String, String>> waktTimes() {
@@ -91,31 +116,94 @@ class PrayerTimes {
   }
 
   String morning() {
-    String from = timings.sunrise;
+    String from = extractTime(timings.sunrise);
     String to = calculateTime(from, 15);
     return '$from - $to';
   }
 
   String noon() {
-    String dhuhr = timings.dhuhr;
+    String dhuhr = extractTime(timings.dhuhr);
     String from = calculateTime(dhuhr, -9);
     String to = calculateTime(dhuhr, -1);
     return '$from - $to';
   }
 
   String afternoon() {
-    String maghrib = timings.maghrib;
+    String maghrib = extractTime(timings.maghrib);
     String from = calculateTime(maghrib, -15);
     String to = calculateTime(maghrib, -4);
     return '$from - $to';
   }
 
-  List<Map<String,String>> restrictedTimes(){
+  List<Map<String, String>> restrictedTimes() {
     return [
       {'name': 'ভোরঃ', 'time': convertToBanglaNumbers(morning())},
       {'name': 'দুপুরঃ', 'time': convertToBanglaNumbers(noon())},
       {'name': 'সন্ধ্যাঃ', 'time': convertToBanglaNumbers(afternoon())},
     ];
+  }
+
+String dayName() {
+  Map<String, String> bengaliDays = {
+    "Sunday": "রবিবার",
+    "Monday": "সোমবার",
+    "Tuesday": "মঙ্গলবার",
+    "Wednesday": "বুধবার",
+    "Thursday": "বৃহস্পতিবার",
+    "Friday": "শুক্রবার",
+    "Saturday": "শনিবার"
+  };
+
+  return bengaliDays[date.gregorian.weekday.en] ?? "অজানা দিন";
+}
+
+
+  String dayNumber() {
+    return convertToBanglaNumbers(date.gregorian.day);
+  }
+
+  String engMonth() {
+    const List<String> bengaliMonths = [
+      "জানুয়ারি",
+      "ফেব্রুয়ারি",
+      "মার্চ",
+      "এপ্রিল",
+      "মে",
+      "জুন",
+      "জুলাই",
+      "আগস্ট",
+      "সেপ্টেম্বর",
+      "অক্টোবর",
+      "নভেম্বর",
+      "ডিসেম্বর"
+    ];
+    return bengaliMonths[date.gregorian.month.number - 1];
+  }
+
+  String engYear() {
+    return convertToBanglaNumbers(date.gregorian.year);
+  }
+
+  String hijriDayNumber() {
+    return convertToBanglaNumbers(date.hijri.day);
+  }
+
+  String hijriMonth() {
+    const List<String> hijriMonths = [
+       "মুহররম", "সফর", "রবিউল আওয়াল", "রবিউস সানি",
+       "জমাদিউল আওয়াল", "জমাদিউল সানি", "রজব",
+       "শাবান", "রমজান", "শাওয়াল",
+       "জিলক্বদ", "জিলহজ্জ"
+   ];
+    return hijriMonths[date.hijri.month.number-1];
+  }
+
+  String hijriYear() {
+    return convertToBanglaNumbers(date.hijri.year);
+  }
+
+  static String extractTime(String timeString) {
+    return timeString.split(' ').first;
   }
 
   String calculateTime(String time, int minutesToAdd) {
