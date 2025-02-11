@@ -55,7 +55,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
       });
       WidgetsBinding.instance.addPostFrameCallback((_) {
         scrollController.animateTo(
-          (currentDay - 1) * 308.0,
+          (currentDay - 1) * 358.0,
           duration: const Duration(seconds: 1),
           curve: Curves.easeInOut,
         );
@@ -150,13 +150,14 @@ class _CalenderScreenState extends State<CalenderScreen> {
                 : ListView.builder(
                     controller: scrollController,
                     itemCount: _monthlyPrayerTimes.length,
+                    padding: EdgeInsets.only(top: 5),
                     itemBuilder: (context, index) {
                       int day = index + 1;
                       bool isToday = (day == currentDay);
                       PrayerTimes prayerTimes = _monthlyPrayerTimes[index];
 
                       return Container(
-                        height: 300,
+                        height: 350,
                         margin: const EdgeInsets.only(
                             left: 8, right: 8, bottom: 12),
                         decoration: BoxDecoration(
@@ -186,43 +187,44 @@ class _CalenderScreenState extends State<CalenderScreen> {
                                       color: Colors.yellow.shade50,
                                       width: double.infinity,
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          prayerTimes.dayNumber(),
-                                          style: TextStyle(
-                                            fontSize: 30,
-                                            color: Colors.blueGrey
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            prayerTimes.dayNumber(),
+                                            style: TextStyle(
+                                                fontSize: 30,
+                                                color: Colors.blueGrey),
                                           ),
-                                        ),
-                                        Text(
-                                          '${prayerTimes.engMonth()}, ${prayerTimes.engYear()}',
-                                          style: TextStyle(
-                                            color: Colors.blueGrey
-                                          )
-                                        ),
-                                        Text(
-                                          prayerTimes.dayName(),
-                                          style: TextStyle(
-                                            color: Colors.blueGrey
-                                          )
-                                        ),
-                                        Text('${prayerTimes.hijriDayNumber()} ${prayerTimes.hijriMonth()}, ${prayerTimes.hijriYear()}'),
-                                      ],
+                                          Text(
+                                              '${prayerTimes.engMonth()}, ${prayerTimes.engYear()}',
+                                              style: TextStyle(
+                                                  color: Colors.blueGrey)),
+                                          Text(prayerTimes.dayName(),
+                                              style: TextStyle(
+                                                  color: Colors.blueGrey)),
+                                          Text(
+                                              '${prayerTimes.hijriDayNumber()} ${prayerTimes.hijriMonth()}, ${prayerTimes.hijriYear()}'),
+                                        ],
                                       ),
                                     ),
                                   ),
                                   Container(
                                     color: Colors.green.shade100,
-                                    height: 80,
+                                    height: 90,
                                     width: double.infinity,
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        Text('সাহরি শেষঃ ${convertToBanglaNumbers(prayerTimes.sahri())}'),
-                                        Text('সাহরি শেষঃ ${convertToBanglaNumbers(prayerTimes.ifter())}'),
+                                        Text(
+                                            'সাহরি শেষঃ ${convertToBanglaNumbers(prayerTimes.sahri())}'),
+                                        Text(
+                                            'সাহরি শেষঃ ${convertToBanglaNumbers(prayerTimes.ifter())}'),
                                       ],
                                     ),
                                   )
@@ -235,7 +237,86 @@ class _CalenderScreenState extends State<CalenderScreen> {
                                 color: Colors.green.shade50,
                                 height: double.infinity,
                                 child: Column(
-                                  children: [],
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Expanded(
+                                            child: GridView.builder(
+                                              itemCount: prayerTimes.calenderWaktTimes().length,
+                                              physics: NeverScrollableScrollPhysics(),
+                                                gridDelegate:
+                                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 3,
+                                                  mainAxisSpacing: 8,
+                                                  crossAxisSpacing: 8,
+                                                  childAspectRatio: 1.5,
+                                                ),
+                                                itemBuilder:
+                                                    (context, int index) {
+                                                      var wakt = prayerTimes.calenderWaktTimes()[index];
+                                                  return Column(
+                                                    children: [
+                                                      Text(
+                                                        wakt['name']!
+                                                      ),
+                                                      Text(
+                                                        wakt['start']!,
+                                                        style: TextStyle(
+                                                          color: Colors.blueGrey),
+                                                      ),
+                                                      Text(
+                                                        wakt['end']!,
+                                                        style: TextStyle(
+                                                          color: Colors.blueGrey),
+                                                      ),
+                                                    ],
+                                                  );
+                                                }),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 90,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'সালাতের নিষিদ্ধ সময়',
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                          ...prayerTimes
+                                              .restrictedTimes()
+                                              .map((restrictedWakt) {
+                                            return Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      restrictedWakt['name']!,
+                                                    ),
+                                                    SizedBox(width: 8),
+                                                    Text(
+                                                      restrictedWakt['time']!,
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(height: 2),
+                                              ],
+                                            );
+                                          }).toList(),
+                                        ],
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
                             )

@@ -115,6 +115,16 @@ class PrayerTimes {
     ];
   }
 
+  List<Map<String, String>> calenderWaktTimes() {
+    return [
+      {'name': 'ফজর', 'start': convertToBanglaNumbers(fajr_start()), "end" : convertToBanglaNumbers(fajr_end())},
+      {'name': 'যোহর', 'start': convertToBanglaNumbers(dhuhr_start()), "end" : convertToBanglaNumbers(dhuhr_end())},
+      {'name': 'আসর', 'start': convertToBanglaNumbers(asr_start()), "end" : convertToBanglaNumbers(asr_end())},
+      {'name': 'মাগরিব', 'start': convertToBanglaNumbers(maghrib_start()), "end" : convertToBanglaNumbers(maghrib_end())},
+      {'name': 'এশা', 'start': convertToBanglaNumbers(isha_start()), "end" : convertToBanglaNumbers(isha_end())},
+    ];
+  }
+
   String morning() {
     String from = extractTime(timings.sunrise);
     String to = calculateTime(from, 15);
