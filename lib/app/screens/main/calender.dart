@@ -55,7 +55,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
       });
       WidgetsBinding.instance.addPostFrameCallback((_) {
         scrollController.animateTo(
-          (currentDay - 1) * 358.0,
+          (currentDay - 1) * 308.0,
           duration: const Duration(seconds: 1),
           curve: Curves.easeInOut,
         );
@@ -157,7 +157,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
                       PrayerTimes prayerTimes = _monthlyPrayerTimes[index];
 
                       return Container(
-                        height: 350,
+                        height: 300,
                         margin: const EdgeInsets.only(
                             left: 8, right: 8, bottom: 12),
                         decoration: BoxDecoration(
@@ -243,37 +243,45 @@ class _CalenderScreenState extends State<CalenderScreen> {
                                         children: [
                                           Expanded(
                                             child: GridView.builder(
-                                              itemCount: prayerTimes.calenderWaktTimes().length,
-                                              physics: NeverScrollableScrollPhysics(),
+                                                itemCount: prayerTimes
+                                                    .calenderWaktTimes()
+                                                    .length,
+                                                physics:
+                                                    NeverScrollableScrollPhysics(),
+                                                padding:
+                                                    EdgeInsets.only(top: 8),
                                                 gridDelegate:
                                                     SliverGridDelegateWithFixedCrossAxisCount(
                                                   crossAxisCount: 3,
                                                   mainAxisSpacing: 8,
                                                   crossAxisSpacing: 8,
-                                                  childAspectRatio: 1.5,
                                                 ),
                                                 itemBuilder:
                                                     (context, int index) {
-                                                      var wakt = prayerTimes.calenderWaktTimes()[index];
+                                                  var wakt = prayerTimes
+                                                          .calenderWaktTimes()[
+                                                      index];
                                                   return Column(
                                                     children: [
-                                                      Text(
-                                                        wakt['name']!
-                                                      ),
+                                                      Text(wakt['name']!),
                                                       Text(
                                                         wakt['start']!,
                                                         style: TextStyle(
-                                                          color: Colors.blueGrey),
+                                                            color: Colors
+                                                                .blueGrey),
                                                       ),
                                                       Text(
                                                         wakt['end']!,
                                                         style: TextStyle(
-                                                          color: Colors.blueGrey),
+                                                            color: Colors
+                                                                .blueGrey),
                                                       ),
                                                     ],
                                                   );
                                                 }),
-                                          )
+                                          ),
+                                          Text('সুর্যোদয়ঃ- ${prayerTimes.sunrise()}, সুর্যাস্তঃ- ${prayerTimes.sunset()}'),
+                                          SizedBox(height: 10)
                                         ],
                                       ),
                                     ),

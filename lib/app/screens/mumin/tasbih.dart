@@ -1,4 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:mumin/app/components/tasbih/tasbih_bottom_sheet.dart';
+import 'package:vibration/vibration.dart';
 
 class TasbihScreen extends StatefulWidget {
   const TasbihScreen({super.key});
@@ -10,30 +13,56 @@ class TasbihScreen extends StatefulWidget {
 class _TasbihScreenState extends State<TasbihScreen>
     with SingleTickerProviderStateMixin {
   int _counter = 0;
+  int _targetCounter = 100;
+  String _mode = "volume_off";
+  TextEditingController _tragetEditingController = TextEditingController();
   late AnimationController _animationController;
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
-      lowerBound: 0.9,
-      upperBound: 1.1,
+      duration: const Duration(milliseconds: 200),
+      lowerBound: 0.5,
+      upperBound: 0.7,
     );
+    _preloadSound();
   }
 
   @override
   void dispose() {
     _animationController.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
-  void _incrementCounter() {
+  Future<void> _preloadSound() async {
+    await _audioPlayer.setSource(AssetSource('audio/tap_sound.mp3'));
+  }
+
+  void _incrementCounter() async {
     setState(() {
       _counter++;
     });
-    _animationController.forward(from: 0.9); // Pulse animation
+    if (_mode == 'volume_off') {
+      return;
+    } else if (_mode == 'volume_up') {
+      await _audioPlayer.play(AssetSource('audio/tap_sound.mp3'));
+    } else {
+      if (await Vibration.hasVibrator()) {
+        Vibration.vibrate(duration: 100);
+      }
+    }
+    _animationController.forward(from: 0.2);
+  }
+
+  void _setTargetCounter() {
+    setState(() {
+      _targetCounter = int.parse(_tragetEditingController.text);
+    });
+    Navigator.pop(context);
   }
 
   void _resetCounter() {
@@ -42,52 +71,190 @@ class _TasbihScreenState extends State<TasbihScreen>
     });
   }
 
+  void _modeChange(String mode) {
+    setState(() {
+      _mode = mode;
+    });
+  }
+
+  void _openBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top,
+          ),
+          child: DraggableScrollableSheet(
+            initialChildSize: 0.66,
+            minChildSize: 0.66,
+            maxChildSize: 0.95,
+            builder: (BuildContext context, ScrollController scrollController) {
+              return TasbihBottomSheet(scrollController: scrollController);
+            },
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          "Tasbih Counter",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          "তাসবিহ গণনা",
         ),
+        elevation: 1,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Counter Display with Animation
-          AnimatedBuilder(
-            animation: _animationController,
-            builder: (context, child) {
-              return Transform.scale(
-                scale: _animationController.value,
-                child: child,
-              );
-            },
-            child: Text(
-              '$_counter',
-              style: const TextStyle(
-                fontSize: 80,
-                fontWeight: FontWeight.bold,
-                color: Colors.teal,
+          Container(
+            height: 60,
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.grey,
+                  width: 1.0,
+                ),
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.info),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Center(
+                      child: TextButton.icon(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('বাতিল'),
+                                ),
+                                TextButton(
+                                  onPressed: _setTargetCounter,
+                                  child: Text('সেট করুন'),
+                                ),
+                              ],
+                              title: Text('আপনার টার্গেট লিখুন'),
+                              content: Container(
+                                height: 60,
+                                child: TextField(
+                                  controller: _tragetEditingController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    border:
+                                        OutlineInputBorder(), // Border style
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                    icon: Icon(
+                      Icons.mode_edit,
+                      size: 20,
+                      color: Colors.black,
+                    ),
+                    iconAlignment: IconAlignment.end,
+                    label: Text(_targetCounter.toString(),
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black)),
+                  )),
+                ),
+                InkWell(onTap: _resetCounter, child: Icon(Icons.refresh)),
+                SizedBox(width: 8),
+                _mode == 'volume_off'
+                    ? InkWell(
+                        onTap: () => _modeChange('volume_up'),
+                        child: Icon(Icons.volume_off))
+                    : _mode == 'vibration'
+                        ? InkWell(
+                            onTap: () => _modeChange('volume_off'),
+                            child: Icon(Icons.vibration))
+                        : InkWell(
+                            onTap: () => _modeChange('vibration'),
+                            child: Icon(Icons.volume_up))
+              ],
+            ),
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: _incrementCounter,
+              child: Container(
+                color: Colors.transparent,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        SizedBox(
+                          width: 150,
+                          height: 150,
+                          child: CircularProgressIndicator(
+                            value: 1.0, // Always full for the target
+                            strokeWidth: 16,
+                            backgroundColor: Colors.grey[300], // Static border
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.grey.shade200),
+                          ),
+                        ),
+                        // Inner Circle - Represents the current counter progress
+                        SizedBox(
+                          width: 150,
+                          height: 150,
+                          child: CircularProgressIndicator(
+                            value: _counter /
+                                _targetCounter.clamp(1, _targetCounter),
+                            strokeWidth: 16,
+                            backgroundColor: Colors.transparent,
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.teal),
+                          ),
+                        ),
+                        // Counter Text (without animation)
+                        Text(
+                          '$_counter',
+                          style: const TextStyle(
+                            fontSize: 50,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.teal,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Text('যেকোনো জায়গায় ট্যাপ করুন',
+                        style: TextStyle(color: Colors.grey.shade500)),
+                  
+                  ],
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 20),
-
-          // Increment Button
-          ElevatedButton(
-            onPressed: _incrementCounter,
-            child: const Text(
-              "Increment",
-            ),
-          ),
-          const SizedBox(height: 20),
-
-          // Reset Button
-          ElevatedButton(
-            onPressed: _resetCounter,
-            child: const Text(
-              "Reset",
+          SizedBox(
+            height: 40,
+            child: ElevatedButton(
+              onPressed: () {
+                _openBottomSheet(context); // Open the bottom sheet
+              },
+              child: Text('জিকির সমূহ'),
             ),
           ),
         ],

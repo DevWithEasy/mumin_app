@@ -72,7 +72,7 @@ class _KalimaScreenState extends State<KalimaScreen> {
                   return Container(
                     margin: EdgeInsets.symmetric(vertical: 5),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blue, width: 1),
+                      border: Border.all(color: Colors.grey.shade200, width: 1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Theme(
