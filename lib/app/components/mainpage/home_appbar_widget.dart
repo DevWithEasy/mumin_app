@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mumin/app/providers/app_provider.dart';
-import 'package:mumin/app/screens/loactionSettings.dart';
+import 'package:mumin/app/screens/location_calculation/location_area.dart';
 import 'package:provider/provider.dart';
 
 class HomeAppBarActions extends StatefulWidget {

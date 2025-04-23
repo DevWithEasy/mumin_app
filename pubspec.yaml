@@ -147,6 +147,7 @@ flutter:
     - assets/images/salah/tayammum.png
     - assets/images/salah/wudu.png
     - assets/data/countries.json
+    - assets/data/calculation_methods.json
     - assets/data/asmaul_husna.json
     - assets/data/kalimas.json
     - assets/data/hadith.json
@@ -166,7 +167,7 @@ flutter:
     - assets/data/ruqyah/ruqyah_details.json
     - assets/data/ruqyah/instant_ruqyah.json
     - assets/data/ruqyah/video_cat.json
-    - assets/audio/tap_sound.mp3
+    - assets/audio/tasbih_click_sound.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

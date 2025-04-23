@@ -1,6 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:mumin/app/components/tasbih/tasbih_bottom_sheet.dart';
+import 'package:mumin/app/services/shared_data.dart';
+import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 import 'package:vibration/vibration.dart';
 
 class TasbihScreen extends StatefulWidget {
@@ -39,17 +41,18 @@ class _TasbihScreenState extends State<TasbihScreen>
   }
 
   Future<void> _preloadSound() async {
-    await _audioPlayer.setSource(AssetSource('audio/tap_sound.mp3'));
+    await _audioPlayer.setSource(AssetSource('audio/tasbih_click_sound.mp3'));
   }
 
   void _incrementCounter() async {
     setState(() {
       _counter++;
     });
+    SharedData.setInt('counter', _counter);
     if (_mode == 'volume_off') {
       return;
     } else if (_mode == 'volume_up') {
-      await _audioPlayer.play(AssetSource('audio/tap_sound.mp3'));
+      await _audioPlayer.play(AssetSource('audio/tasbih_click_sound.mp3'));
     } else {
       if (await Vibration.hasVibrator()) {
         Vibration.vibrate(duration: 100);
@@ -59,10 +62,16 @@ class _TasbihScreenState extends State<TasbihScreen>
   }
 
   void _setTargetCounter() {
-    setState(() {
-      _targetCounter = int.parse(_tragetEditingController.text);
-    });
-    Navigator.pop(context);
+    int value = int.parse(_tragetEditingController.text);
+    if (value < 0) {
+      return;
+    } else {
+      SharedData.setInt('tasbih_target_value', value);
+      setState(() {
+        _targetCounter = int.parse(_tragetEditingController.text);
+      });
+      Navigator.pop(context);
+    }
   }
 
   void _resetCounter() {
@@ -114,20 +123,20 @@ class _TasbihScreenState extends State<TasbihScreen>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            height: 60,
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            height: 50,
+            padding: EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 1.0,
+                // border: Border(
+                //   bottom: BorderSide(
+                //     color: Colors.grey,
+                //     width: 1.0,
+                //   ),
+                // ),
                 ),
-              ),
-            ),
             child: Row(
               children: [
                 Icon(Icons.info),
-                SizedBox(width: 8),
+                SizedBox(width: 32),
                 Expanded(
                   child: Center(
                       child: TextButton.icon(
@@ -136,6 +145,11 @@ class _TasbihScreenState extends State<TasbihScreen>
                           context: context,
                           builder: (context) {
                             return AlertDialog(
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    0), // Set your desired radius
+                              ),
                               actions: [
                                 TextButton(
                                   onPressed: () {
@@ -148,15 +162,19 @@ class _TasbihScreenState extends State<TasbihScreen>
                                   child: Text('সেট করুন'),
                                 ),
                               ],
-                              title: Text('আপনার টার্গেট লিখুন'),
+                              title: Text(
+                                'আপনার টার্গেট লিখুন',
+                                style: TextStyle(fontSize: 16),
+                              ),
                               content: Container(
-                                height: 60,
+                                height: 50,
                                 child: TextField(
+                                  expands: false,
                                   controller: _tragetEditingController,
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
-                                    border:
-                                        OutlineInputBorder(), // Border style
+                                    border: OutlineInputBorder(),
+                                    // contentPadding: EdgeInsets.symmetric(vertical: 24)// Border style
                                   ),
                                 ),
                               ),
@@ -164,12 +182,13 @@ class _TasbihScreenState extends State<TasbihScreen>
                           });
                     },
                     icon: Icon(
-                      Icons.mode_edit,
-                      size: 20,
+                      Icons.border_color,
+                      size: 16,
                       color: Colors.black,
                     ),
                     iconAlignment: IconAlignment.end,
-                    label: Text(_targetCounter.toString(),
+                    label: Text(
+                        convertToBanglaNumbers(_targetCounter.toString()),
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -181,14 +200,14 @@ class _TasbihScreenState extends State<TasbihScreen>
                 _mode == 'volume_off'
                     ? InkWell(
                         onTap: () => _modeChange('volume_up'),
-                        child: Icon(Icons.volume_off))
+                        child: Icon(Icons.volume_off, color: Colors.teal))
                     : _mode == 'vibration'
                         ? InkWell(
                             onTap: () => _modeChange('volume_off'),
-                            child: Icon(Icons.vibration))
+                            child: Icon(Icons.vibration, color: Colors.teal))
                         : InkWell(
                             onTap: () => _modeChange('vibration'),
-                            child: Icon(Icons.volume_up))
+                            child: Icon(Icons.volume_up, color: Colors.teal))
               ],
             ),
           ),
@@ -197,6 +216,7 @@ class _TasbihScreenState extends State<TasbihScreen>
               onTap: _incrementCounter,
               child: Container(
                 color: Colors.transparent,
+                width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -209,7 +229,7 @@ class _TasbihScreenState extends State<TasbihScreen>
                           height: 150,
                           child: CircularProgressIndicator(
                             value: 1.0, // Always full for the target
-                            strokeWidth: 16,
+                            strokeWidth: 10,
                             backgroundColor: Colors.grey[300], // Static border
                             valueColor: AlwaysStoppedAnimation<Color>(
                                 Colors.grey.shade200),
@@ -222,7 +242,7 @@ class _TasbihScreenState extends State<TasbihScreen>
                           child: CircularProgressIndicator(
                             value: _counter /
                                 _targetCounter.clamp(1, _targetCounter),
-                            strokeWidth: 16,
+                            strokeWidth: 10,
                             backgroundColor: Colors.transparent,
                             valueColor:
                                 AlwaysStoppedAnimation<Color>(Colors.teal),
@@ -230,9 +250,9 @@ class _TasbihScreenState extends State<TasbihScreen>
                         ),
                         // Counter Text (without animation)
                         Text(
-                          '$_counter',
+                          convertToBanglaNumbers('$_counter'),
                           style: const TextStyle(
-                            fontSize: 50,
+                            fontSize: 40,
                             fontWeight: FontWeight.bold,
                             color: Colors.teal,
                           ),
@@ -242,19 +262,23 @@ class _TasbihScreenState extends State<TasbihScreen>
                     SizedBox(height: 20),
                     Text('যেকোনো জায়গায় ট্যাপ করুন',
                         style: TextStyle(color: Colors.grey.shade500)),
-                  
                   ],
                 ),
               ),
             ),
           ),
-          SizedBox(
-            height: 40,
-            child: ElevatedButton(
-              onPressed: () {
-                _openBottomSheet(context); // Open the bottom sheet
-              },
-              child: Text('জিকির সমূহ'),
+          InkWell(
+            onTap: () {
+              _openBottomSheet(context); // Open the bottom sheet
+            },
+            child: Container(
+              height: 40,
+              decoration: BoxDecoration(
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.circular(16)),
+              margin: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              padding: EdgeInsets.symmetric(horizontal: 4),
+              child: Center(child: Text('জিকির সমূহ')),
             ),
           ),
         ],

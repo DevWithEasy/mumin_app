@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'dart:convert'; // For JSON decoding
+import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:mumin/app/components/kalima_text_widget.dart'; // For rootBundle
+import 'package:mumin/app/models/AllahName.dart';
+import 'package:mumin/app/screens/allah/allah_name_details.dart';
+import 'package:mumin/app/utils/convert_to_bangla_number.dart';
 
 class AllahScreen extends StatefulWidget {
   const AllahScreen({super.key});
@@ -11,7 +13,7 @@ class AllahScreen extends StatefulWidget {
 }
 
 class _AllahScreenState extends State<AllahScreen> {
-  List<dynamic> _asmaulHusna = [];
+  List<AllahName> _asmaulHusna = [];
 
   @override
   void initState() {
@@ -25,14 +27,14 @@ class _AllahScreenState extends State<AllahScreen> {
       final String jsonString =
           await rootBundle.loadString('assets/data/asmaul_husna.json');
       // Decode the JSON string
-      final List<dynamic> data = jsonDecode(jsonString);
-      // Update the state with the parsed data
+      final List<dynamic> jsonData = jsonDecode(jsonString);
+      List<AllahName> data = jsonData.map((json)=>AllahName.fromJson(json)).toList();
       setState(() {
         _asmaulHusna = data;
       });
     } catch (e) {
       // Handle any errors during loading or parsing
-      // print('Error loading or parsing JSON: $e');
+      print('Error loading or parsing JSON: $e');
     }
   }
 
@@ -60,83 +62,46 @@ class _AllahScreenState extends State<AllahScreen> {
                       Text(
                         'আবূ হুরাইরাহ (রাঃ) হতে বর্ণিত। তিনি বলেন, আল্লাহ্ তা‘আলার নিরানব্বই নাম আছে, এক কম একশত নাম। যে ব্যক্তি এ (নাম) গুলোর হিফাযাত করবে সে জান্নাতে প্রবেশ করবে। আল্লাহ্ বিজোড়। তিনি বিজোড় পছন্দ করেন।\nসহীহ বুখারী (হাদিসঃ ৬৪১০)',
                       ),
-                      SizedBox(height: 8),
+                      SizedBox(height: 24),
                     ],
                   ),
                 ),
                 _asmaulHusna.isEmpty
                     ? const Center(child: CircularProgressIndicator())
-                    : ListView.builder(
+                    : ListView.separated(
                         itemCount: _asmaulHusna.length,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           final item = _asmaulHusna[index];
-                          return Container(
-                            margin: EdgeInsets.symmetric(vertical: 5),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade300, width: 1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Theme(
-                              data: Theme.of(context)
-                                  .copyWith(dividerColor: Colors.transparent),
-                              child: ExpansionTile(
-                                title: Text(
-                                  item['bangla'] ?? '',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 16,right: 16, bottom: 16),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'আরবি:  ${item['arbi'] ?? ''}',
-                                          style: const TextStyle(fontSize: 16)
-                                        ),
-                                        SizedBox(height: 5),
-                                        Text(
-                                          'অর্থ:  ${item['meaning'] ?? ''}',
-                                          style: const TextStyle(fontSize: 16)
-                                        ),
-                                        SizedBox(height: 8),
-                                        KalimaText(
-                                          title: 'ফযীলতঃ',
-                                          value: item['faz'] ?? '',
-                                        ),
-                                      ],
-                                    ),
+                          return InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AllahNameDetailsScreen(
+                                id : item.id,
+                                currentIndex: index,
+                              )));
+                            },
+                            child: Row(
+                              children: [
+                                CircleAvatar(child: Text(convertToBanglaNumbers(item.id.toString()))),
+                                SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(item.arbi),
+                                      Text(item.bangla)
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                                Icon(Icons.arrow_forward_sharp,size: 16)
+                              ],
                             ),
                           );
-                          // return Card(
-                          //   margin: EdgeInsets.only(bottom: 10),
-                          //   child: ListTile(
-                          //     leading: CircleAvatar(
-                          //       child: Text(item['id'].toString()),
-                          //     ),
-                          //     title: Text(
-                          //       item['bangla'] ?? '',
-                          //       style:
-                          //           const TextStyle(fontWeight: FontWeight.bold),
-                          //     ),
-                          //     subtitle: Column(
-                          //       crossAxisAlignment: CrossAxisAlignment.start,
-                          //       children: [
-                          //         Text('আরবি: ${item['arbi'] ?? ''}'),
-                          //         Text('অর্থ: ${item['meaning'] ?? ''}'),
-                          //         Text('ফযীলত: ${item['faz'] ?? ''}'),
-                          //       ],
-                          //     ),
-                          //     isThreeLine: true,
-                          //   ),
-                          // );
-                        },
+                        }, separatorBuilder: (BuildContext context, int index) {
+                          return Divider();
+                },
                       ),
               ],
             ),
